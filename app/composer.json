@@ -1,0 +1,19 @@
+{
+  "name": "cms-custom/app",
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Patrick Chen",
+      "email": "chen.patrick47@gmail.com"
+    },
+    {
+      "name": "Louis Pillon",
+      "email": "louisgzan.pro@gmail.com"
+    }
+  ],
+  "require": {}
+}
