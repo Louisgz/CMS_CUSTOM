@@ -5,8 +5,9 @@ namespace App\Entity;
 class Author
 {
     private string $id;
-    private string $name;
-    private string $surname;
+    private string $firstname;
+    private string $lastname;
+    private string $username;
     private bool $isAdmin;
 
     /**
@@ -24,36 +25,54 @@ class Author
     {
         $this->id = $id;
     }
+
     /**
      * @return string
      */
-    public function getName(): string
+    public function getFirstame(): string
     {
-        return $this->name;
+        return $this->firstname;
     }
 
     /**
      * @return void
      */
-    public function setName(string $name): void
+    public function setFirstname(string $firstname): void
     {
-        $this->name = $name;
+        $this->firstname = $firstname;
     }
+
     /**
      * @return string
      */
-    public function getSurname(): string
+    public function getLastname(): string
     {
-        return $this->surname;
+        return $this->lastname;
+    }
+
+    /**
+     * @return void
+     */
+    public function setLastname(string $lastname): void
+    {
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
     }
 
     /**
      * @return void
      */
 
-    public function setSurname(string $surname): void
+    public function setUsername(string $username): void
     {
-        $this->surname = $surname;
+        $this->username = $username;
     }
 
     /**
