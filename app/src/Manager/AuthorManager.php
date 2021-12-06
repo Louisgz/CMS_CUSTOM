@@ -6,21 +6,20 @@ use \PDOManager;
 use \PDO;
 use \App\Entity\Author;
 
-
 class AuthorManager extends BaseManager
 {
     public function createNewAuthor($firstName, $lastName, $userName, $isAdmin)
     {
         $ID_Author = uniqid();
 
-        $insert = "INSERT INTO Authors (`id`, `firstname`, `lastname`, `username`, `isadmin`) VALUES (:id, :firstName, :lastName, :userName, :isAdmin)";
+        $insert = "INSERT INTO Authors (`id`, `firstname`, `lastname`, `username`, `isAdmin`) VALUES (:id, :firstName, :lastName, :userName, :isAdmin)";
         $request = $this->bdd->prepare($insert);
         $request->execute(array(
             'id' => $ID_Author,
             'firstname' => $firstName,
             'lastname' => $lastName,
             'username' => $userName,
-            'isadmin' => $isAdmin,
+            'isAdmin' => $isAdmin,
         ));
     }
 
