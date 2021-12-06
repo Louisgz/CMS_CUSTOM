@@ -2,6 +2,8 @@
 
 <routes>
     <route path="/" action="index" controller="PostController"/>
-    <route path="show" action="show" controller="PostController" params="id"/>
-    <route path="author" action="author" controller="PostController"/>
+    <route path="createPost" action="createPost" controller="PostController"/>
+    <route path="login" action="login" controller="UserController"/>
+    <route path="signup" action="signup" controller="UserController"/>
+    <route path="account" action="account" controller="UserController"/>
 </routes>
