@@ -4,10 +4,10 @@ namespace App\Manager;
 
 abstract class BaseManager
 {
-    protected $pdo;
+    protected $bdd;
 
-    public function __construct($pdo)
+    public function __construct($bdd)
     {
-        $this->pdo = $pdo;
+        $this->bdd = $bdd;
     }
 }
