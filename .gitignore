@@ -1,2 +1,4 @@
 /.idea
 /database
+/vendor
+composer.lock

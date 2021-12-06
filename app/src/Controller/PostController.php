@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\Author;
-use App\Fram\Factories\PDOFactory;
-use App\Fram\Utils\Flash;
-use App\Manager\PostManager;
+// use App\Entity\Author;
+// use App\Fram\Factories\PDOFactory;
+// use App\Fram\Utils\Flash;
+// use App\Manager\PostManager;
 
 class PostController extends BaseController
 {
@@ -14,24 +14,23 @@ class PostController extends BaseController
      */
     public function executeIndex()
     {
-        $postManager = new PostManager(PDOFactory::getMysqlConnection());
-        $posts = $postManager->getAllPosts();
+        // $postManager = new PostManager(PDOFactory::getMysqlConnection());
+        // $posts = $postManager->getAllPosts();
 
         $this->render(
             'home.php',
             [
-                'posts' => $posts,
-                'user' => new Author(),
+                // 'posts' => $posts,
+                // 'user' => new Author(),
                 'test' => 'je suis un test'
             ],
             'Home page'
         );
-
     }
 
     public function executeShow()
     {
-        Flash::setFlash('alert', 'je suis une alerte');
+        // Flash::setFlash('alert', 'je suis une alerte');
 
         $this->render(
             'show.php',
