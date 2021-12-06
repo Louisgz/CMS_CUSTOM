@@ -11,16 +11,6 @@ a {
   font-weight: 400;
 }
 
-h2 {
-  text-align: center;
-  font-size: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  display: inline-block;
-  margin: 40px 8px 10px 8px;
-  color: #cccccc;
-}
-
 /* STRUCTURE */
 
 .page-container {
@@ -63,22 +53,11 @@ h2 {
   border-radius: 0 0 10px 10px;
 }
 
-/* TABS */
-
-h2.inactive {
-  color: #cccccc;
-}
-
-h2.active {
-  color: #0d0d0d;
-  border-bottom: 2px solid #5fbae9;
-}
-
 /* FORM TYPOGRAPHY*/
 
-input[type="button"],
-input[type="submit"],
-input[type="reset"] {
+#formContent input[type="button"],
+#formContent input[type="submit"],
+#formContent input[type="reset"] {
   background-color: #56baed;
   border: none;
   color: white;
@@ -96,15 +75,15 @@ input[type="reset"] {
   transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
 }
 
-input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover {
+#formContent input[type="button"]:hover,
+#formContent input[type="submit"]:hover,
+#formContent input[type="reset"]:hover {
   background-color: #39ace7;
 }
 
-input[type="button"]:active,
-input[type="submit"]:active,
-input[type="reset"]:active {
+#formContent input[type="button"]:active,
+#formContent input[type="submit"]:active,
+#formContent input[type="reset"]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -112,8 +91,8 @@ input[type="reset"]:active {
   transform: scale(0.95);
 }
 
-input[type="text"],
-input[type="password"] {
+#formContent input[type="text"],
+#formContent input[type="password"] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -129,15 +108,19 @@ input[type="password"] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
+#formContent input[type="text"]:focus,
+#formContent input[type="password"]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
-input[type="text"]:placeholder,
-input[type="password"]:placeholder {
+#formContent input[type="text"]:placeholder,
+#formContent input[type="password"]:placeholder {
   color: #cccccc;
+}
+
+.input-group-text {
+  border-radius: 0.25rem 0 0 0.25rem;
 }
 
 /* OTHERS */
