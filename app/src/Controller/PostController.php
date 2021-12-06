@@ -22,7 +22,9 @@ class PostController extends BaseController
             [
                 // 'posts' => $posts,
                 // 'user' => new Author(),
-                'test' => 'je suis un test'
+                // 'test' => 'je suis un test'
+                'test' => 'article ' . $this->params['id']
+
             ],
             'Home page'
         );
