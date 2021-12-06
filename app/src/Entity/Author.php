@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-class Author
+class Author extends BaseEntity
 {
     private string $id;
     private string $firstname;
     private string $lastname;
     private string $username;
     private bool $isAdmin;
+
 
     /**
      * @return string
