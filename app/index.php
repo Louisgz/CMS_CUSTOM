@@ -10,7 +10,6 @@
 
   <body>
     Hello world test
-
   </body>
 
 </html>
