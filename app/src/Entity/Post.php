@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class Post
+class Post extends BaseEntity
 {
     private string $id;
     private \DateTime $date;
