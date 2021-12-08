@@ -6,8 +6,6 @@
  * @var $posts \App\Entity\Post[]
  */
 
-
-
-echo $test;
+var_dump($posts);
 
 ?>
