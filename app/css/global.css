@@ -1,0 +1,6 @@
+@import "style.css";
+
+.flex-post-column{
+    display: flex;
+    flex-direction: column;
+}

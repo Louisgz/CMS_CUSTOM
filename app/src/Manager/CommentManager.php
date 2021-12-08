@@ -21,7 +21,7 @@ class CommentManager extends BaseManager
      /**
      * @return Comment
      */
-    public function getCommentById(int $id): Comment
+    public function getCommentById(string $id)
     {
         $getComment = 'SELECT * FROM comments WHERE id = :id';
         $request = $this->bdd->prepare($getComment);
@@ -45,7 +45,7 @@ class CommentManager extends BaseManager
         ));
     }
 
-    public function deleteComment(int $id){
+    public function deleteComment(string $id){
         $deleteComment = 'DELETE FROM comments WHERE id = :id';
         $request = $this->bdd->prepare($deleteComment);
         $request->bindParam(':id', $id);
@@ -53,7 +53,7 @@ class CommentManager extends BaseManager
         return true;
     }
 
-    public function editComment(int $id, string $content, string $authorId,  string $postId){
+    public function editComment(string $id, string $content, string $authorId,  string $postId){
         $editComment = 'UPDATE comments SET content = :content, author = :author, postId = :postId WHERE id = :id';
         $request = $this->bdd->prepare($editComment);
         $request->bindParam(':id', $id);
