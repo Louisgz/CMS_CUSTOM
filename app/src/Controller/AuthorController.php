@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Fram\Factories\PDOFactory;
 use App\Manager\AuthorManager;
+use App\Entity\Author;
 
 class AuthorController extends BaseController
 {
@@ -12,7 +13,9 @@ class AuthorController extends BaseController
   {
     $this->render(
       'login.php',
-      [],
+      [
+        'username' => $this->params['username']
+      ],
       'Login page'
     );
   }
@@ -28,15 +31,27 @@ class AuthorController extends BaseController
 
   public function executeAccount()
   {
-    $this->render(
-      'account.php',
-      [
-        'username' => 'louisgz',
-        'firstname' => 'Louis',
-        'lastname' => 'Pillon',
-        'isAdmin' => true
-      ],
-      'Account page'
-    );
+    if ($_SESSION['user']) {
+      $user = new Author($_SESSION['user']);
+      $username = $user->getUsername();
+      $firstname = $user->getFirstname();
+      $lastname = $user->getLastname();
+      $isAdmin = $user->getIsAdmin();
+
+
+      $this->render(
+        'account.php',
+        [
+          'username' => $username,
+          'firstname' => $firstname,
+          'lastname' => $lastname,
+          'isAdmin' => $isAdmin
+        ],
+        'Account page'
+      );
+    } else {
+      header('Location: /');
+      exit();
+    }
   }
 }

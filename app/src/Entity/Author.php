@@ -33,7 +33,7 @@ class Author extends BaseEntity
     /**
      * @return string
      */
-    public function getFirstame(): string
+    public function getFirstname(): string
     {
         return $this->firstname;
     }
@@ -82,9 +82,17 @@ class Author extends BaseEntity
     /**
      * @return bool
      */
-    public function getIsAdmin(): int
+    public function getIsAdmin(): bool
     {
         return $this->isAdmin;
+    }
+
+    /**
+     * @return void
+     */
+    public function setIsAdmin(bool $isAdmin): void
+    {
+        $this->isAdmin = $isAdmin;
     }
 
     /**
@@ -104,11 +112,9 @@ class Author extends BaseEntity
     }
 
     /**
-     * Set the value of password
-     *
      * @return void
      */
-    public function setPassword(string $password): void
+    public function setPassword(string $password)
     {
         $this->password = $password;
     }

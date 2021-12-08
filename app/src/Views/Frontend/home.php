@@ -6,6 +6,6 @@
  * @var $posts \App\Entity\Post[]
  */
 
-var_dump($posts);
+// var_dump($posts);
 
 ?>

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Author;
 use App\Fram\Factories\PDOFactory;
 use App\Manager\AuthorManager;
 
@@ -19,10 +20,63 @@ class AuthController extends BaseController
 
     $user = $authorManager->createNewAuthor($firstname, $lastname, $username, $password);
     $_SESSION['user'] = $user;
-    var_dump($user->getIsAdmin());
+
+    header("Location: /account");
+    exit();
+  }
+  public function executeLogin()
+  {
+    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    //TODO Effectuer toutes les verifs pour les credentials
+
+    $res = $authorManager->login($username, $password);
+
+    if ($res['type'] == 'error') {
+      echo $res['message'];
+    } else {
+      echo 'success';
+    }
+
+    // $_SESSION['user'] = $user;
 
     // header("Location: /account");
-    // die();
+    // exit();
+  }
+
+  public function executeUpdate()
+  {
+    $user = new Author($_SESSION['user']);
+    $id = $user->getId();
+    $username = $user->getUsername();
+    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+    $isAdmin = $_POST['isAdmin'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    if (isset($_POST['isAdmin']) && $_POST['isAdmin'] == '1') {
+      $isAdmin = 1;
+    } else {
+      $isAdmin = 0;
+    }
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    //TODO Effectuer toutes les verifs pour les credentials
+
+
+    $user = $authorManager->updateAuthor($firstname, $lastname, $username, $password, $isAdmin, $id);
+    $_SESSION['user'] = $user;
+
+    header("Location: /account");
+    exit();
+  }
+
+  public function executeLogout()
+  {
+    $_SESSION['user'] = null;
+    header('Location: /');
+    exit();
   }
 
   public function verifyValues(string $value)
