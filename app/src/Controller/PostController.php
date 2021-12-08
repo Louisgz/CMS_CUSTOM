@@ -20,7 +20,7 @@ class PostController extends BaseController
         $this->render(
             'home.php',
             [
-                // 'posts' => $posts,
+                'posts' => $posts,
                 // 'user' => new Author(),
                 // 'test' => 'je suis un test'
                 'test' => 'article ' . $this->params['id']

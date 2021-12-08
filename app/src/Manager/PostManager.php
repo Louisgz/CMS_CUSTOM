@@ -11,14 +11,21 @@ class PostManager extends BaseManager
 
 
     /**
-     * @return Post[]
+     * @return array
      */
     public function getAllPosts(): array
     {
-        // TODO -  Get all posts
-        return [];
+        $getallPosts = 'SELECT * FROM Posts';
+        $request = $this->bdd->prepare($getallPosts);
+        $request->execute(array());
+        $posts = $request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Post');
+
+        return $posts;
     }
 
+    /**
+     * @return Post
+     */
     public function getPostById(int $id): Post
     {
         $getPost = 'SELECT * FROM Posts WHERE id = :id';
