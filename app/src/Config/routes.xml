@@ -10,6 +10,6 @@
     <route path="account" action="account" controller="UserController"/>
     
     <!--Routes API-->
-    <route path='api/createPost' action="createPost" controller="apiController"/>
+    <route path='api/createPost' action="createPost" controller="ApiController"/>
 
 </routes>

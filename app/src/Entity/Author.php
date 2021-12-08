@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Manager\AuthorManager;
+
 class Author extends BaseEntity
 {
     private string $id;
@@ -9,6 +11,7 @@ class Author extends BaseEntity
     private string $lastname;
     private string $username;
     private bool $isAdmin;
+    private string $password;
 
 
     /**
@@ -90,5 +93,23 @@ class Author extends BaseEntity
     public function setBooks(bool $isAdmin): void
     {
         $this->isAdmin = $isAdmin;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * Set the value of password
+     *
+     * @return void
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 }
