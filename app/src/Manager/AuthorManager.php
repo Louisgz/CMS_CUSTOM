@@ -25,7 +25,7 @@ class AuthorManager extends BaseManager
 
     public function getSingleAuthor($id)
     {
-        $getAuthor = 'SELECT * FROM Authors WHERE id = :id';
+        $getAuthor = 'SELECT * FROM authors WHERE id = ?';
         $request = $this->bdd->prepare($getAuthor);
         $request->execute(array($id));
         $author = $request->fetch(PDO::FETCH_ASSOC);
