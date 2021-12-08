@@ -8,7 +8,7 @@ class Comment extends BaseEntity
     private \DateTime $date;
     private string $content;
     private string $authorId;
-
+    private string $postId;
     /**
      * @return string
      */
@@ -30,7 +30,6 @@ class Comment extends BaseEntity
      */
     public function getdate(): \DateTime
     {
-        return $this->date;
         return $this->date;
     }
 
@@ -72,5 +71,20 @@ class Comment extends BaseEntity
     public function setAuthorId(string $authorId): void
     {
         $this->id = $authorId;
+    }
+    /**
+     * @return string
+     */
+    public function getPostId(): string
+    {
+        return $this->postId;
+    }
+
+    /**
+     * @return void
+     */
+    public function setPostId(string $postId): void
+    {
+        $this->id = $postId;
     }
 }
