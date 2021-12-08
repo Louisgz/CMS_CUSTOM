@@ -29,7 +29,7 @@ session_start();
             <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
             <li><a href="/create-post" class="nav-link px-2 text-white">Create post</a></li>
             <?php
-          if ($_SESSION['user']) {
+          if (isset($_SESSION['user'])) {
           ?>
             <li><a href="/account" class="nav-link px-2 text-white">My account</a></li>
             <?php
