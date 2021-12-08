@@ -1,4 +1,3 @@
-
 /* BASIC */
 
 body {
@@ -96,6 +95,7 @@ a {
 }
 
 #formContent input[type="text"],
+#formContent textarea,
 #formContent input[type="password"] {
   background-color: #f6f6f6;
   border: none;
@@ -113,12 +113,14 @@ a {
 }
 
 #formContent input[type="text"]:focus,
+#formContent textarea:focus,
 #formContent input[type="password"]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
 #formContent input[type="text"]:placeholder,
+#formContent textarea:placeholder,
 #formContent input[type="password"]:placeholder {
   color: #cccccc;
 }

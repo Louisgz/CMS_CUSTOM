@@ -31,7 +31,7 @@ class AuthorController extends BaseController
 
   public function executeAccount()
   {
-    if ($_SESSION['user']) {
+    if (isset($_SESSION['user'])) {
       $user = new Author($_SESSION['user']);
       $username = $user->getUsername();
       $firstname = $user->getFirstname();

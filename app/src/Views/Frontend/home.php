@@ -7,7 +7,7 @@
 ?>
 
 <div class="flex-post-column">
-  <h1>Dernier post</h1>
+  <h1>Derniers posts</h1>
   <?php
     foreach ($posts as $post) {
     ?>

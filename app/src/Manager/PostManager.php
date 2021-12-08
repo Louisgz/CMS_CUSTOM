@@ -27,11 +27,11 @@ class PostManager extends BaseManager
     {
         $getPost = 'SELECT * FROM posts WHERE id = :id';
         $request = $this->bdd->prepare($getPost);
-        $request-> execute([
+        $request->execute([
             'id' => $id
         ]);
         $post = $request->fetchAll();
-        if($post) return $post;
+        if ($post) return $post;
     }
 
     /**
@@ -41,20 +41,22 @@ class PostManager extends BaseManager
     public function createPost($title, $content, $authorId)
     {
         // TODO - create post
-        
+
+        var_dump($title);
+        var_dump($content);
+        var_dump($authorId);
+
         $setNewId = uniqid();
-        $insert = 'INSERT INTO posts(id, date, title, content, authorId) VALUES(:id, :date, :title, :content, :authorId)';
+        $insert = 'INSERT INTO posts (`id`, `date`, `title`, `content`, `authorId`) VALUES (:id, :dateNow, :title, :content, :authorId)';
         $request = $this->bdd->prepare($insert);
-        $request->bindParam(':title', $title);
-        $request->bindParam(':content', $content);
-        $request->bindParam(':author_id', $authorId);
         $request->execute(array(
             'id' => $setNewId,
-            'date' => time(),
+            'dateNow' => 4545,
             'title' => $title,
             'content' => $content,
             'author' => $authorId,
         ));
+        $request->fetchAll();
         return true;
     }
 
