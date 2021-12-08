@@ -56,7 +56,7 @@ class PostController extends BaseController
         $this->render(
             'post.php',
             [
-                'post' => $postManager->getPostById($_GET['id']),
+                'posts' => $postManager->getPostById($_GET['id']),
                 'comments' => $commentManager->getAllComments()
             ],
             'Post'

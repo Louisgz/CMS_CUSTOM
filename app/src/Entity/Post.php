@@ -32,7 +32,6 @@ class Post extends BaseEntity
     public function getdate(): \DateTime
     {
         return $this->date;
-        return $this->date;
     }
 
     /**

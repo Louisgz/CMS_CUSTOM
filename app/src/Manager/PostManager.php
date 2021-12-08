@@ -31,7 +31,6 @@ class PostManager extends BaseManager
             'id' => $id
         ]);
         $post = $request->fetchAll();
-        var_dump($post);
         if($post) return $post;
     }
 

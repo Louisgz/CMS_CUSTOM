@@ -40,7 +40,7 @@
                                 }
                                 ?>
                                 <input type="text" id="commentInput" name="addComment" placeholder="ajouter commentaire">
-                                <button id="addComment" onclick="addComment(<?php echo $post['id'] ?>)">Ajouter</button>
+                                <button id="addComment" class="btn btn-primary" onclick="addComment(<?php echo $post['id'] ?>)">Ajouter</button>
                             </div>
                         </div>
                     <?php
