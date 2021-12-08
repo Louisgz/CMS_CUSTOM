@@ -34,11 +34,11 @@ class AuthorManager extends BaseManager
 
     public function login(string $username, string $password)
     {
-        $user = $this->getUser($username);
-        if ($user) {
-            $user = new Author($user);
+        $userInfos = $this->getUser($username);
+        if ($userInfos) {
+            $user = new Author($userInfos);
             if (password_verify($password, $user->getPassword())) {
-                $_SESSION['user'] = $user;
+                $_SESSION['user'] = $userInfos;
                 return [
                     'type' => 'success',
                 ];

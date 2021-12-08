@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Author;
 use App\Fram\Factories\PDOFactory;
+use App\Fram\Utils\Flash;
 use App\Manager\AuthorManager;
 
 class AuthController extends BaseController
@@ -35,15 +36,15 @@ class AuthController extends BaseController
     $res = $authorManager->login($username, $password);
 
     if ($res['type'] == 'error') {
-      echo $res['message'];
+      Flash::setFlash('alert', $res['message']);
+      header("Location: /login-page");
+      exit();
     } else {
-      echo 'success';
+      header("Location: /account");
+      exit();
     }
 
     // $_SESSION['user'] = $user;
-
-    // header("Location: /account");
-    // exit();
   }
 
   public function executeUpdate()
