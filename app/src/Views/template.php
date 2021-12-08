@@ -29,10 +29,10 @@
           </ul>
 
           <div class="text-end">
-            <a href="/login">
+            <a href="/login-page">
               <button type="button" class="btn btn-outline-light me-2">Login</button>
             </a>
-            <a href="/signup">
+            <a href="/signup-page">
               <button type="button" class="btn btn-warning">Sign-up</button>
             </a>
           </div>
