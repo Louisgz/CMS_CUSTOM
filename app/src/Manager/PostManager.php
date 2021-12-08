@@ -3,20 +3,19 @@
 namespace App\Manager;
 
 use App\Entity\Post;
-use \PDO;
-use \PDOManager;
+use PDO;
+
 
 class PostManager extends BaseManager
 {
     /**
      * @return array
      */
-    public function getAllPosts(): array
+    public function getAllPosts()
     {
-        $getallPosts = 'SELECT * FROM Posts';
-        $request = $this->bdd->prepare($getallPosts);
-        $request->execute(array());
-        $posts = $request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Post');
+        $request = $this->bdd->query('SELECT * FROM posts');
+        $request->setFetchMode(PDO::FETCH_CLASS, 'Post');
+        $posts = $request->fetchAll();
 
         return $posts;
     }

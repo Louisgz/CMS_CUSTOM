@@ -21,10 +21,6 @@ class PostController extends BaseController
             'home.php',
             [
                 'posts' => $posts,
-                // 'user' => new Author(),
-                // 'test' => 'je suis un test'
-                'test' => 'article ' . $this->params['id']
-
             ],
             'Home page'
         );
