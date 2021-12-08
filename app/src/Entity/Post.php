@@ -5,7 +5,7 @@ namespace App\Entity;
 class Post extends BaseEntity
 {
     private string $id;
-    // private \DateTime $date;
+    private \DateTime $date;
     private string $title;
     private string $content;
     private string $authorId;
@@ -31,7 +31,6 @@ class Post extends BaseEntity
      */
     public function getdate(): \DateTime
     {
-        return $this->date;
         return $this->date;
     }
 

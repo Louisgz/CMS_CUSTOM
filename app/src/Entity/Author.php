@@ -82,7 +82,7 @@ class Author extends BaseEntity
     /**
      * @return bool
      */
-    public function getIsAdmin(): bool
+    public function getIsAdmin(): int
     {
         return $this->isAdmin;
     }

@@ -1,3 +1,4 @@
+
 /* BASIC */
 
 body {
@@ -15,6 +16,9 @@ a {
 
 .page-container {
   min-height: 90vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .wrapper {

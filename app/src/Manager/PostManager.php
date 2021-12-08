@@ -23,13 +23,15 @@ class PostManager extends BaseManager
     /**
      * @return Post
      */
-    public function getPostById(int $id): Post
+    public function getPostById(string $id)
     {
         $getPost = 'SELECT * FROM posts WHERE id = :id';
         $request = $this->bdd->prepare($getPost);
-        $request->execute(array($id));
-        $post = $request->fetch(PDO::FETCH_ASSOC);
-        return new Post($post);
+        $request-> execute([
+            'id' => $id
+        ]);
+        $post = $request->fetchAll();
+        if($post) return $post;
     }
 
     /**
@@ -79,7 +81,7 @@ class PostManager extends BaseManager
      * @param int $id
      * @return bool
      */
-    public function deletePostById(int $id)
+    public function deletePostById(string $id)
     {
         // TODO - Delete post
         $deletePost = 'DELETE FROM posts WHERE id = :id';
@@ -87,5 +89,15 @@ class PostManager extends BaseManager
         $request->bindValue(':id', $id, PDO::PARAM_INT);
         $request->execute();
         return true;
+    }
+
+    public function getAllCommentFormId(string $id)
+    {
+        $getComment = 'SELECT * FROM comments WHERE postId = :id';
+        $request = $this->bdd->prepare($getComment);
+        $request->bindValue(':id', $id, PDO::PARAM_INT);
+        $request->execute();
+        $comments = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $comments;
     }
 }

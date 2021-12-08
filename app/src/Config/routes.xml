@@ -4,6 +4,7 @@
 
     <!--Routes front-->
     <route path="/" action="index" controller="PostController"/>
+    <route path="post" action="showPost" controller="PostController" params="id"/>
     <route path="create-post" action="createPost" controller="PostController"/>
     <route path="login-page" action="loginPage" controller="AuthorController" params="username"/>
     <route path="signup-page" action="signupPage" controller="AuthorController"/>
