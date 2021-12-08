@@ -28,20 +28,51 @@ session_start();
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
             <li><a href="/create-post" class="nav-link px-2 text-white">Create post</a></li>
+            <?php
+          if ($_SESSION['user']) {
+          ?>
             <li><a href="/account" class="nav-link px-2 text-white">My account</a></li>
+            <?php
+          }
+          ?>
           </ul>
 
           <div class="text-end">
+
+            <?php
+          if (!isset($_SESSION['user'])) {
+          ?>
             <a href="/login-page">
               <button type="button" class="btn btn-outline-light me-2">Login</button>
             </a>
             <a href="/signup-page">
               <button type="button" class="btn btn-warning">Sign-up</button>
             </a>
+            <?php
+          } else {
+          ?>
+            <a href="/log-out">
+              <button type="button" class="btn btn-warning">Log out</button>
+            </a>
+            <?php
+          }
+          ?>
+
           </div>
         </div>
       </div>
     </header>
+    <?php if (\App\Fram\Utils\Flash::hasFlash('success')) : ?>
+    <div class="alert alert-success" role="alert">
+      <?= \App\Fram\Utils\Flash::getFlash('success'); ?>
+    </div>
+    <?php endif; ?>
+
+    <?php if (\App\Fram\Utils\Flash::hasFlash('alert')) : ?>
+    <div class="alert alert-danger" role="alert">
+      <?= \App\Fram\Utils\Flash::getFlash('alert'); ?>
+    </div>
+    <?php endif; ?>
     <div class="page-container d-flex">
       <?= $content; ?>
     </div>

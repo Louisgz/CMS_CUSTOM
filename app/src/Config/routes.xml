@@ -5,12 +5,15 @@
     <!--Routes front-->
     <route path="/" action="index" controller="PostController"/>
     <route path="create-post" action="createPost" controller="PostController"/>
-    <route path="login-page" action="loginPage" controller="AuthorController"/>
+    <route path="login-page" action="loginPage" controller="AuthorController" params="username"/>
     <route path="signup-page" action="signupPage" controller="AuthorController"/>
-    <route path="account" action="account" controller="AuthorController" params="username, firstname, lastname, isAdmin"/>
+    <route path="account" action="account" controller="AuthorController"/>
     
-    <!--Routes API-->
+    <!--Auth-->
     <route path='signup' action="signup" controller="AuthController"/>
+    <route path='login' action="login" controller="AuthController" />
+    <route path='update-infos' action="update" controller="AuthController"/>
+    <route path='log-out' action="logout" controller="AuthController"/>
 
 
 </routes>
