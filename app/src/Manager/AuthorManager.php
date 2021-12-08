@@ -8,21 +8,73 @@ use \App\Entity\Author;
 
 class AuthorManager extends BaseManager
 {
-    public function createNewAuthor($firstName, $lastName, $userName, $password)
+    public function createNewAuthor(string $firstname, string $lastname, string $username, string $password): array
     {
         $ID_Author = uniqid();
         $insert = "INSERT INTO authors (`id`, `firstname`, `lastname`, `username`, `password`, `isAdmin`) VALUES (:id, :firstname, :lastname, :username, :pw, :isAdmin)";
         $request = $this->bdd->prepare($insert);
         $args = array(
             'id' => $ID_Author,
-            'firstname' => $firstName,
-            'lastname' => $lastName,
-            'username' => $userName,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'username' => $username,
             'pw' => $password,
             'isAdmin' => 0,
         );
         $request->execute($args);
-        return new Author($args);
+        return array(
+            'id' => $ID_Author,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'username' => $username,
+            'password' => $password,
+            'isAdmin' => 0,
+        );
+    }
+
+    public function login(string $username, string $password)
+    {
+        $userInfos = $this->getUser($username);
+        if ($userInfos) {
+            $user = new Author($userInfos);
+            if (password_verify($password, $user->getPassword())) {
+                $_SESSION['user'] = $userInfos;
+                return [
+                    'type' => 'success',
+                ];
+            } else {
+                return [
+                    'type' => 'error',
+                    'message' => 'Mot de passe incorrect',
+                ];
+            }
+        } else {
+            return [
+                'type' => 'error',
+                'message' => 'Login incorrect',
+            ];
+        }
+    }
+
+    public function updateAuthor($firstname, $lastname, $username, $password, $idAdmin, $id)
+    {
+        $insert = "UPDATE `authors` SET `firstname` = :firstname, `lastname` = :lastname, `isAdmin` = :isAdmin WHERE id = :id";
+        $request = $this->bdd->prepare($insert);
+        $args = array(
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'isAdmin' => $idAdmin,
+            'id' => $id,
+        );
+        $request->execute($args);
+        return array(
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'password' => $password,
+            'isAdmin' => $idAdmin,
+            'id' => $id,
+            'username' => $username,
+        );
     }
 
     public function getAuthorByUsername($username)
@@ -66,7 +118,7 @@ class AuthorManager extends BaseManager
         $request = $this->bdd->prepare($getUser);
         $request->execute(array($username));
         $author = $request->fetch(PDO::FETCH_ASSOC);
-        return new Author($author);
+        return $author;
     }
 
     /**
@@ -101,13 +153,5 @@ class AuthorManager extends BaseManager
         $request->bindParam(':id', $id, PDO::PARAM_STR);
         $request->execute();
         return true;
-    }
-
-    public function checkCredential(string $username, string $password)
-    {
-        //Function to check credential
-
-        $user = $this->getUser($username);
-        return $user;
     }
 }
