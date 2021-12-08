@@ -7,10 +7,10 @@
     <route path="create-post" action="createPost" controller="PostController"/>
     <route path="login-page" action="loginPage" controller="AuthorController"/>
     <route path="signup-page" action="signupPage" controller="AuthorController"/>
-    <route path="account" action="account" controller="AuthorController"/>
+    <route path="account" action="account" controller="AuthorController" params="username, firstname, lastname, isAdmin"/>
     
     <!--Routes API-->
-    <route path='api/createPost' action="createPost" controller="ApiController" params="id"/>
+    <route path='signup' action="signup" controller="AuthController"/>
 
 
 </routes>

@@ -1,7 +1,6 @@
 <div class="wrapper align-items-center justify-content-start flex-column p-5">
   <h2 class='mb-4'>Bonjour <?= $username ?></h2>
   <div class="container" style="max-width: 700px; margin: 0 auto">
-
     <form>
       <div class="input-group mb-3">
         <div class="input-group-prepend">

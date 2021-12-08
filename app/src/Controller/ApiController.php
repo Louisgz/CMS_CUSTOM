@@ -9,6 +9,8 @@ use App\Manager\AuthorManager;
 class ApiController extends BaseController
 {
 
+
+
   public function executeCreatePost()
   {
     $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());

@@ -47,4 +47,13 @@ class PostController extends BaseController
             'Auteur'
         );
     }
+
+    public function executeCreatePost()
+    {
+        $this->render(
+            'createPost.php',
+            [],
+            'Create a post'
+        );
+    }
 }
