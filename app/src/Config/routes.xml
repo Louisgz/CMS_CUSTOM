@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <routes>
+
+    <!--Routes front-->
     <route path="/" action="index" controller="PostController"/>
     <route path="createPost" action="createPost" controller="PostController"/>
     <route path="login" action="login" controller="UserController"/>
     <route path="signup" action="signup" controller="UserController"/>
     <route path="account" action="account" controller="UserController"/>
+    
+    <!--Routes API-->
+    <route path='api/createPost' action="createPost" controller="apiController"/>
+
 </routes>
