@@ -5,6 +5,7 @@ namespace App\Manager;
 use App\Entity\Post;
 use \PDO;
 use \PDOManager;
+
 class PostManager extends BaseManager
 {
 
@@ -24,9 +25,8 @@ class PostManager extends BaseManager
 
     public function getPostById(int $id): Post
     {
-        $bdd = PDOManager::getBdd();
         $getPost = 'SELECT * FROM Posts WHERE id = :id';
-        $request = $bdd->prepare($getPost);
+        $request = $this->bdd->prepare($getPost);
         $request->execute(array($id));
         $post = $request->fetch(PDO::FETCH_ASSOC);
         return new Post($post);

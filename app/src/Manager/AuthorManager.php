@@ -31,4 +31,21 @@ class AuthorManager extends BaseManager
         $author = $request->fetch(PDO::FETCH_ASSOC);
         return new Author($author);
     }
+
+    public function getUser($username)
+    {
+        $getUser = 'SELECT * FROM Authors WHERE username = :username';
+        $request = $this->bdd->prepare($getUser);
+        $request->execute(array($username));
+        $author = $request->fetch(PDO::FETCH_ASSOC);
+        return new Author($author);
+    }
+
+    public function checkCredential(string $username, string $password)
+    {
+        //Function to check credential
+
+        $user = $this->getUser($username);
+        return $user;
+    }
 }
