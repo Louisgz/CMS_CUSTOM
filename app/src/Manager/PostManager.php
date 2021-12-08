@@ -8,8 +8,6 @@ use \PDOManager;
 
 class PostManager extends BaseManager
 {
-
-
     /**
      * @return array
      */
@@ -58,7 +56,7 @@ class PostManager extends BaseManager
      * @param int $id
      * @return bool
      */
-    public function deletePostById(int $id): bool
+    public function deletePostById(int $id)
     {
         // TODO - Delete post
     }
