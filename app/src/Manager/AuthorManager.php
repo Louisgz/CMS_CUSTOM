@@ -85,12 +85,10 @@ class AuthorManager extends BaseManager
      */
     public function deleteAuthor($id)
     {
-        $delete = "DELETE FROM authors WHERE id = :id";
-        $request = $this->bdd->prepare($delete);
+        $deleteAuthor = "DELETE FROM authors WHERE id = :id";
+        $request = $this->bdd->prepare($deleteAuthor);
         $request->bindParam(':id', $id, PDO::PARAM_STR);
-        $request->execute(array(
-            'id' => $id,
-        ));
+        $request->execute();
         return true;
     }
 

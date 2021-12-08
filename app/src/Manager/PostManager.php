@@ -40,6 +40,15 @@ class PostManager extends BaseManager
     public function createPost(Post $post)
     {
         // TODO - create post
+        $insert = 'INSERT INTO Posts(id, date, title, content, authorId) VALUES(:id, :date, :title, :content, :authorId)';
+        $request = $this->bdd->prepare($insert);
+        $request->execute(array(
+            'id' => $post->getId(),
+            'date' => $post->getDate(),
+            'title' => $post->getTitle(),
+            'content' => $post->getContent(),
+            'author' => $post->getauthorId(),
+        ));
         return true;
     }
 
@@ -50,6 +59,16 @@ class PostManager extends BaseManager
     public function updatePost(Post $post)
     {
         // TODO - getPostById($post->getId())
+        $updatePost = 'UPDATE Posts SET date = :date, title = :title, content = :content, authorId = :authorId WHERE id = :id';
+        $request = $this->bdd->prepare($updatePost);
+        $request->execute(array(
+            'id' => $post->getId(),
+            'date' => $post->getDate(),
+            'title' => $post->getTitle(),
+            'content' => $post->getContent(),
+            'author' => $post->getauthorId(),
+        ));
+        return true;
     }
 
     /**
@@ -59,5 +78,10 @@ class PostManager extends BaseManager
     public function deletePostById(int $id)
     {
         // TODO - Delete post
+        $deletePost = 'DELETE FROM Posts WHERE id = :id';
+        $request = $this->bdd->prepare($deletePost);
+        $request->bindValue(':id', $id, PDO::PARAM_INT);
+        $request->execute();
+        return true;
     }
 }
