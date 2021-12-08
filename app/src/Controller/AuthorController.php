@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
-class UserController extends BaseController
+use App\Fram\Factories\PDOFactory;
+use App\Manager\AuthorManager;
+
+class AuthorController extends BaseController
 {
 
-  public function executeLogin()
+  public function executeLoginPage()
   {
     $this->render(
       'login.php',
@@ -14,7 +17,7 @@ class UserController extends BaseController
     );
   }
 
-  public function executeSignup()
+  public function executeSignupPage()
   {
     $this->render(
       'signup.php',

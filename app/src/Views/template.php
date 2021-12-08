@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!doctype html>
 <html lang="en">
 
@@ -24,15 +27,15 @@
 
           <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
             <li><a href="/" class="nav-link px-2 text-secondary">Home</a></li>
-            <li><a href="/createPost" class="nav-link px-2 text-white">Create post</a></li>
+            <li><a href="/create-post" class="nav-link px-2 text-white">Create post</a></li>
             <li><a href="/account" class="nav-link px-2 text-white">My account</a></li>
           </ul>
 
           <div class="text-end">
-            <a href="/login">
+            <a href="/login-page">
               <button type="button" class="btn btn-outline-light me-2">Login</button>
             </a>
-            <a href="/signup">
+            <a href="/signup-page">
               <button type="button" class="btn btn-warning">Sign-up</button>
             </a>
           </div>

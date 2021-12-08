@@ -8,19 +8,30 @@ use \App\Entity\Author;
 
 class AuthorManager extends BaseManager
 {
-    public function createNewAuthor($firstName, $lastName, $userName, $isAdmin)
+    public function createNewAuthor($firstName, $lastName, $userName, $password)
     {
         $ID_Author = uniqid();
-
-        $insert = "INSERT INTO Authors (`id`, `firstname`, `lastname`, `username`, `isAdmin`) VALUES (:id, :firstName, :lastName, :userName, :isAdmin)";
+        $insert = "INSERT INTO authors (`id`, `firstname`, `lastname`, `username`, `password`, `isAdmin`) VALUES (:id, :firstname, :lastname, :username, :pw, :isAdmin)";
         $request = $this->bdd->prepare($insert);
-        $request->execute(array(
+        $args = array(
             'id' => $ID_Author,
             'firstname' => $firstName,
             'lastname' => $lastName,
             'username' => $userName,
-            'isAdmin' => $isAdmin,
-        ));
+            'pw' => $password,
+            'isAdmin' => 0,
+        );
+        $request->execute($args);
+        return new Author($args);
+    }
+
+    public function getAuthorByUsername($username)
+    {
+        $select = "SELECT * FROM authors WHERE `user` = :username";
+        $request = $this->bdd->prepare($select);
+        $request->setFetchMode(PDO::FETCH_CLASS, 'Author');
+        $author = $request->fetchAll();
+        return $author;
     }
 
 
@@ -36,8 +47,8 @@ class AuthorManager extends BaseManager
         return $request->fetchAll();
     }
 
-   /**
-    * @param id
+    /**
+     * @param id
      * @return Author
      */
     public function getSingleAuthor($id)
@@ -58,18 +69,18 @@ class AuthorManager extends BaseManager
         return new Author($author);
     }
 
-       /**
-    * @param Author
+    /**
+     * @param Author
      * @return Boolean
      */
     public function updateAuthorNames($username, $firstname, $lastname, $id)
     {
         $update = "UPDATE authors SET username = :username, firstname = :firstname, lastname = :lastname WHERE id = :id";
         $request = $this->bdd->prepare($update);
-        $request-> bindparam(':username', $username, PDO::PARAM_STR);
-        $request-> bindparam(':firstname', $firstname, PDO::PARAM_STR);
-        $request-> bindparam(':lastname', $lastname, PDO::PARAM_STR);
-        $request-> bindparam(':id', $id, PDO::PARAM_STR);
+        $request->bindparam(':username', $username, PDO::PARAM_STR);
+        $request->bindparam(':firstname', $firstname, PDO::PARAM_STR);
+        $request->bindparam(':lastname', $lastname, PDO::PARAM_STR);
+        $request->bindparam(':id', $id, PDO::PARAM_STR);
         $request->execute(array(
             'username' => $username,
             'firstname' => $firstname,
@@ -80,7 +91,7 @@ class AuthorManager extends BaseManager
     }
 
     /**
-    * @param id
+     * @param id
      * @return Boolean
      */
     public function deleteAuthor($id)
