@@ -1,5 +1,5 @@
 /.idea
-/database
+# /database
 /vendor
 composer.lock
 .DS_Store
