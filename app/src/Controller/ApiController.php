@@ -22,7 +22,8 @@ class ApiController extends BaseController
     $postManager = new PostManager(PDOFactory::getMysqlConnection());
     $postManager->createPost($title, $content, $user->getId());
 
-
+    header('Location: /');
+    exit();
     // return $user;
   }
 }

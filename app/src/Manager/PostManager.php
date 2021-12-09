@@ -40,23 +40,15 @@ class PostManager extends BaseManager
      */
     public function createPost($title, $content, $authorId)
     {
-        // TODO - create post
-
-        var_dump($title);
-        var_dump($content);
-        var_dump($authorId);
-
-        $setNewId = uniqid();
-        $insert = 'INSERT INTO posts (`id`, `date`, `title`, `content`, `authorId`) VALUES (:id, :dateNow, :title, :content, :authorId)';
+        $newId = uniqid();
+        $insert = 'INSERT INTO posts (`id`, `title`, `content`, `authorId`) VALUES (:id, :title, :content, :authorId)';
         $request = $this->bdd->prepare($insert);
         $request->execute(array(
-            'id' => $setNewId,
-            'dateNow' => 4545,
+            'id' => $newId,
             'title' => $title,
             'content' => $content,
-            'author' => $authorId,
+            'authorId' => $authorId,
         ));
-        $request->fetchAll();
         return true;
     }
 
