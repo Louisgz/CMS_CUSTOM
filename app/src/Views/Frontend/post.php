@@ -5,7 +5,7 @@
  * @var $posts \App\Entity\Post[]
  */
 
-
+use App\Entity\Author;
 ?>
 <div class="flex-post-column">
         <?php
@@ -36,10 +36,15 @@
                         <?php
                     }
                     ?>
-                    <form action="create-comment/?id=<?php echo($_GET['id']) ?>" method='post'>
-                    <input type="text" id="commentInput" name="comment" placeholder="ajouter commentaire">
-                    <input type="submit" value="Create comment">
-                    </form>
+                    <div>
+                         <?php   if (isset($_SESSION['user'])){ ?>
+                        <form action="create-comment/?id=<?php echo($_GET['id']) ?>" method='post'>
+                            <input type="text" id="commentInput" name="comment" placeholder="ajouter commentaire">
+                            <input type="submit" value="Create comment">
+                        </form>
+
+                       <?php }?>
+                    </div>
                 </div>
             </div>
         <?php

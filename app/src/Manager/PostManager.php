@@ -103,18 +103,22 @@ class PostManager extends BaseManager
 
     public function createComment(string $postId, string $authorId, string $content)
     {
-        $newId = uniqid();
-        $insert = 'INSERT INTO `comments` (`id`, `postId`, `authorId`, `content`) VALUES (:id, :postId, :authorId, :content)';
-        $request = $this->bdd->prepare($insert);
-        $request->execute(
-            array(
-                'id' => $newId,
-                'postId' => $postId,
-                'authorId' => $authorId,
-                'content' => $content
-            )
-        );
-
+        if (isset($_SESSION['user'])) {
+            $newId = uniqid();
+            $insert = 'INSERT INTO `comments` (`id`, `postId`, `authorId`, `content`) VALUES (:id, :postId, :authorId, :content)';
+            $request = $this->bdd->prepare($insert);
+            $request->execute(
+                array(
+                    'id' => $newId,
+                    'postId' => $postId,
+                    'authorId' => $authorId,
+                    'content' => $content
+                )
+            );
+            header("Location: /post?id=$postId");
+        } else {
+            header("Location: /");
+        };
         return true;
     }
 }
