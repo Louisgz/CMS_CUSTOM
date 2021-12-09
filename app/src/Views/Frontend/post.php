@@ -18,7 +18,7 @@ use App\Entity\Author;
                     <form action="delete-post?id=<?= $_GET['id'] ?>" method="post">
                     <button type="submit" class="btn btn-danger">Delete post</button>
                     </form>
-                        <button type="button" class="btn btn-warning"><a href="/edit-post">Edit post</a></button>
+                        <button type="button" class="btn btn-warning"><a href="/edit-post?id=<?= $_GET['id'] ?>">Edit post</a></button>
                     </div>
                     <div>
                         <p><?php echo $post['content'] ?></p>

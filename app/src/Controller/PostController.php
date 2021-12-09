@@ -86,13 +86,11 @@ class PostController extends BaseController
     public function getEditPost()
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
-        $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
 
         $this->render(
             'editPost.php',
             [
                 'posts' => $postManager->getPostById($_GET['id']),
-                'comments' => $commentManager->getAllComments()
             ],
             'edit a post'
         );
