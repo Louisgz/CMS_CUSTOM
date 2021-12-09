@@ -46,7 +46,12 @@ class AuthorController extends BaseController
     if (!isset($_SESSION['user'])) {
       $this->render(
         'signup.php',
-        [],
+        [
+          'firstname' => $_GET['firstname'],
+          'lastname' => $_GET['lastname'],
+          'username' => $_GET['username'],
+          'password' => $_GET['password'],
+        ],
         'signup page'
       );
     } else {
@@ -103,14 +108,53 @@ class AuthorController extends BaseController
   public function postSignup()
   {
     $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
-    $username = $_POST['username'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $values = array(
+      'firstname' => $_POST['firstname'],
+      'lastname' => $_POST['lastname'],
+      'username' => $_POST['username'],
+      'password' => $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null,
+    );
+    $isValid = true;
+    $message = '';
 
-    //TODO Effectuer toutes les verifs pour les credentials
+    if (!$values['firstname']) {
+      $isValid = false;
+      $message = "Merci de renseigner un firstname";
+    }
 
-    $user = $authorManager->createNewAuthor($firstname, $lastname, $username, $password);
+    if (!$values['lastname']) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un lastname";
+    }
+
+    if (!$values['username']) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un username";
+    }
+
+    if (!$values['password']) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un password";
+    }
+
+    if ($authorManager->checkAuthorExists($values['username'])) {
+      $isValid = false;
+      !$message && $message = "L'utilisateur existe déjà ! ";
+    }
+
+    if (!$isValid) {
+      Flash::setFlash('alert', $message);
+      $args = '?';
+      $index = 1;
+      foreach ($values as $key => $value) {
+        $key !== 'password' && $args .= $key . '=' . $value . ($index !== count($values) - 1 ? '&' : '');
+        $index++;
+      };
+      header("Location: /signup" . $args);
+      exit();
+    }
+
+    $user = $authorManager->createNewAuthor($values['firstname'], $values['lastname'], $values['username'], $values['password']);
     $_SESSION['user'] = $user;
 
     header("Location: /account");

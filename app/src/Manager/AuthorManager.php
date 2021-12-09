@@ -35,27 +35,24 @@ class AuthorManager extends BaseManager
     public function login(string $username, string $password)
     {
         $userInfos = $this->getUser($username);
-        if ($userInfos) {
-            $user = new Author($userInfos);
-            if (password_verify($password, $user->getPassword())) {
-                $_SESSION['user'] = $userInfos;
-                return [
-                    'type' => 'success',
-                ];
-            } else {
-                return [
-                    'type' => 'error',
-                    'message' => 'Mot de passe incorrect',
-                    'username' =>  $username,
-                ];
-            }
-        } else {
-            return [
-                'type' => 'error',
-                'message' => 'Login incorrect',
-                'username' =>  $username,
-            ];
-        }
+        if (!$userInfos) return [
+            'type' => 'error',
+            'message' => 'Login incorrect',
+            'username' =>  $username,
+        ];
+
+        $user = new Author($userInfos);
+
+        if (password_verify($password, $user->getPassword())) return [
+            'type' => 'error',
+            'message' => 'Mot de passe incorrect',
+            'username' =>  $username,
+        ];
+
+        $_SESSION['user'] = $userInfos;
+        return [
+            'type' => 'success',
+        ];
     }
 
     public function updateAuthor($firstname, $lastname, $username, $password, $idAdmin, $id)
@@ -179,5 +176,11 @@ class AuthorManager extends BaseManager
         return [
             'type' => 'success',
         ];
+    }
+
+
+    public function checkAuthorExists($username)
+    {
+        return $this->getUser($username) ? true : false;
     }
 }
