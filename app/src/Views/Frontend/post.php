@@ -11,12 +11,31 @@ use App\Entity\Author;
         <?php
         foreach ($posts as $post) {
             ?>
-            <div>
-                <div>                        
+            <div class="single-post-page">
+                <div class="single-post-background">                        
                     <h3><?php echo $post['title'] ?></h3>
-                    <p><?php echo $post['content'] ?></p>
+                    <div>
+                        <button type="button" class="btn btn-danger">Delete post</button>
+                        <button type="button" class="btn btn-warning">Edit post</button>
+                    </div>
+                    <div>
+                        <p><?php echo $post['content'] ?></p>
+                    </div>
                 </div>
                 <div>
+                         <?php   if (isset($_SESSION['user'])){ ?>
+                            <div>
+                                <h4>Ajouter un commentaire :</h4>
+                            </div>
+                        <form action="create-comment/?id=<?php echo($_GET['id']) ?>" method='post'>
+                            <input type="text" id="commentInput" name="comment" placeholder="ajouter commentaire">
+                            <input class="btn btn-success" type="submit" value="add comment">
+                            
+                        </form>
+
+                       <?php }?>
+                    </div>
+                    <div class="single-post-background">
                     <p>
                     commentaires:
                     </p>
@@ -25,9 +44,12 @@ use App\Entity\Author;
                         if($comment['postId'] == $post['id']){
                             ?>
                             <div>
-                                <p>
-                                    <?php echo $comment['content'] ?>
-                                </p>
+                                <div>
+                                    <p>
+                                        <?php echo $comment['content'] ?>
+                                    </p>
+                                </div>
+                                <button type="button" class="btn btn-danger">Delete post</button>
                             </div>
                             <?php
                         }
@@ -36,15 +58,6 @@ use App\Entity\Author;
                         <?php
                     }
                     ?>
-                    <div>
-                         <?php   if (isset($_SESSION['user'])){ ?>
-                        <form action="create-comment/?id=<?php echo($_GET['id']) ?>" method='post'>
-                            <input type="text" id="commentInput" name="comment" placeholder="ajouter commentaire">
-                            <input type="submit" value="Create comment">
-                        </form>
-
-                       <?php }?>
-                    </div>
                 </div>
             </div>
         <?php
