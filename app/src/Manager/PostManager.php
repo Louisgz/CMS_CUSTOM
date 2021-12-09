@@ -11,9 +11,9 @@ class PostManager extends BaseManager
     /**
      * @return array
      */
-    public function getAllPosts(int $number = 5, bool $returnArray = false)
+    public function getAllPosts($number = null, bool $returnArray = false)
     {
-        $request = $this->bdd->prepare('SELECT * FROM `posts` LIMIT :limite');
+        $request = $this->bdd->prepare('SELECT * FROM `posts`' . ($number ? 'LIMIT :limite' : ''));
         $request->bindParam(':limite', $number, PDO::PARAM_INT);
         $request->execute();
         if ($returnArray) {
@@ -103,23 +103,18 @@ class PostManager extends BaseManager
 
     public function createComment(string $postId, string $authorId, string $content)
     {
-        var_dump("createComment");
         $newId = uniqid();
-
         $insert = 'INSERT INTO `comments` (`id`, `postId`, `authorId`, `content`) VALUES (:id, :postId, :authorId, :content)';
         $request = $this->bdd->prepare($insert);
-        var_dump($insert);
-        // $request->bindParam(':id', $newId, PDO::PARAM_STR);
-        // $request->bindParam(':postId', $postId, PDO::PARAM_STR);
-        // $request->bindParam(':authorId', $authorId, PDO::PARAM_STR);
-        // $request->bindParam(':content', $content, PDO::PARAM_STR);
-        $request->execute(array
-          (  'id' => $newId,
-            'postId' => $postId,
-            'authorId' => $authorId,
-            'content' => $content)
+        $request->execute(
+            array(
+                'id' => $newId,
+                'postId' => $postId,
+                'authorId' => $authorId,
+                'content' => $content
+            )
         );
-        
+
         return true;
     }
 }

@@ -25,6 +25,13 @@
       </div>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">Password</span>
+        </div>
+        <input type="password" class="form-control" placeholder="password" aria-label="Password"
+          aria-describedby="basic-addon1" name='password'>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">Admin ?</span>
         </div>
         <div class="input-group-text" style='background: white; border-radius: 0.25rem'>

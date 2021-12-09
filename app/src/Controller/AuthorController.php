@@ -33,7 +33,7 @@ class AuthorController extends BaseController
 
     if ($res['type'] == 'error') {
       Flash::setFlash('alert', $res['message']);
-      header("Location: /login");
+      header("Location: /login?username=" . $res['username']);
       exit();
     } else {
       header("Location: /account");

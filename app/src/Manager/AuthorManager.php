@@ -46,31 +46,34 @@ class AuthorManager extends BaseManager
                 return [
                     'type' => 'error',
                     'message' => 'Mot de passe incorrect',
+                    'username' =>  $username,
                 ];
             }
         } else {
             return [
                 'type' => 'error',
                 'message' => 'Login incorrect',
+                'username' =>  $username,
             ];
         }
     }
 
     public function updateAuthor($firstname, $lastname, $username, $password, $idAdmin, $id)
     {
-        $insert = "UPDATE `authors` SET `firstname` = :firstname, `lastname` = :lastname, `isAdmin` = :isAdmin WHERE id = :id";
+        $insert = "UPDATE `authors` SET `firstname` = :firstname, `lastname` = :lastname, `isAdmin` = :isAdmin" . ($password ? ", `password` = :pw" : '') . " WHERE id = :id";
         $request = $this->bdd->prepare($insert);
         $args = array(
             'firstname' => $firstname,
             'lastname' => $lastname,
             'isAdmin' => $idAdmin,
             'id' => $id,
+            'pw' => $password
         );
         $request->execute($args);
         return array(
             'firstname' => $firstname,
             'lastname' => $lastname,
-            'password' => $password,
+            'password' => $password || $_GET['user']['password'],
             'isAdmin' => $idAdmin,
             'id' => $id,
             'username' => $username,

@@ -23,7 +23,7 @@ class AuthController extends BaseController
     } else {
       $isAdmin = 0;
     }
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $password = isset($_POST['password']) ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
 
     //TODO Effectuer toutes les verifs pour les credentials
 
