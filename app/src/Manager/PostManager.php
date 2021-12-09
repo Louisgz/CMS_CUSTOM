@@ -92,6 +92,31 @@ class PostManager extends BaseManager
         return true;
     }
 
+    public function getAllComments($number = null, bool $returnArray)
+    {
+        $request = $this->bdd->prepare('SELECT * FROM `comments`' . ($number ? 'LIMIT :limite' : ''));
+        $request->bindParam(':limite', $number, PDO::PARAM_INT);
+        $request->execute();
+        if ($returnArray) {
+            $request->setFetchMode(PDO::FETCH_ASSOC);
+        } else {
+            $request->setFetchMode(PDO::FETCH_CLASS, 'Comment');
+        }
+        $posts = $request->fetchAll();
+
+        return $posts;
+    }
+
+    public function getCommentById($id)
+    {
+        $getComment = 'SELECT * FROM comments WHERE id = :id';
+        $request = $this->bdd->prepare($getComment);
+        $request->bindValue(':id', $id, PDO::PARAM_STR);
+        $request->execute();
+        $comments = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $comments;
+    }
+
     public function getAllCommentFormId(string $id)
     {
         $getComment = 'SELECT * FROM comments WHERE postId = :id';

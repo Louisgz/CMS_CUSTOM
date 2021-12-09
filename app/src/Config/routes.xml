@@ -20,5 +20,6 @@
     <route path="create-comment" action="createComment" controller="ApiController"/>
     <route path="api/create-post" action="createPost" controller="ApiController"/>
     <route path="api/posts" action="posts" controller="ApiController" params='number,id,mainId'/>
+    <route path="api/comments" action="comments" controller="ApiController" params='number,id'/>
 
 </routes>

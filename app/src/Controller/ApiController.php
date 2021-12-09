@@ -72,6 +72,33 @@ class ApiController extends BaseController
     // return $user;
   }
 
+  public function getComments()
+  {
+    $postManager = new PostManager(PDOFactory::getMysqlConnection());
+    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+
+    // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
+    // if (!$checkUser) {
+    //   $this->HTTPResponse->setCacheHeader(300);
+    //   return new ErrorController('User not connected', 'GET ');
+    // }
+
+    $commentId = !empty($this->params['id']) ? $this->params['id'] : false;
+
+    switch ($commentId) {
+      case false:
+        $this->HTTPResponse->setCacheHeader(300);
+        isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
+        return $this->renderJSON($postManager->getAllComments($number, true));
+      case true:
+        $post = $postManager->getCommentById($commentId);
+        if (!$post) return new ErrorController('No post', 'GET');
+        $this->HTTPResponse->setCacheHeader(300);
+        return $this->renderJSON($post);
+    }
+  }
+
   public function postCreateComment()
   {
     $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
