@@ -9,6 +9,7 @@
     <route path="login" action="login" controller="AuthorController" params="username"/>
     <route path="signup" action="signup" controller="AuthorController"/>
     <route path="account" action="account" controller="AuthorController"/>
+    <route path="list-users" action="listUsers" controller="AuthorController"/>
 
     <!--Routes actions front-->
     <route path="create-comment" action="createComment" controller="PostController"/>

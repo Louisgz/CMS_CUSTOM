@@ -34,6 +34,11 @@ session_start();
             <li><a href="/account" class="nav-link px-2 text-white">My account</a></li>
             <?php
           }
+          if (isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] === 1) {
+          ?>
+            <li><a href="/list-users" class="nav-link px-2 text-white">List users</a></li>
+            <?php
+          }
           ?>
           </ul>
 
