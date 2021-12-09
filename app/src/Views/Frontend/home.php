@@ -7,7 +7,7 @@
 ?>
 
 <div class="flex-post-column">
-  <h1>Derniers posts</h1>
+  <h1 style='margin: 3rem 0'>Home page </h1>
   <?php
   foreach ($posts as $post) {
   ?>

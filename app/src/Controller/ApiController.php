@@ -37,6 +37,17 @@ class ApiController extends BaseController
     }
   }
 
+  public function postPosts()
+  {
+    //TODO Fonction pour ajouter un post par API
+  }
+
+  public function putPosts()
+  {
+    //TODO Fonction pour updater un post par API
+  }
+
+
   public function deletePosts()
   {
     $postManager = new PostManager(PDOFactory::getMysqlConnection());
@@ -94,6 +105,20 @@ class ApiController extends BaseController
     }
   }
 
+  public function postComment()
+  {
+    //TODO Fonction pour ajouter un commentaire par API
+  }
+
+  public function putComment()
+  {
+    //TODO Fonction pour updater un commentaire par API
+  }
+
+  public function deleteComment()
+  {
+    //TODO Fonction pour delete un commentaire par API
+  }
 
   public function renderJSON($content)
   {
