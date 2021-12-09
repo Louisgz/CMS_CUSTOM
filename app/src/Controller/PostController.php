@@ -13,13 +13,13 @@ class PostController extends BaseController
     /**
      * Show all Posts
      */
-    public function executeIndex()
+    public function getIndex()
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
         $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
         $posts = $postManager->getAllPosts();
         $comments = $commentManager->getAllComments();
-        
+
 
         $this->render(
             'home.php',
@@ -32,7 +32,7 @@ class PostController extends BaseController
     }
 
 
-    public function executeAuthor()
+    public function getAuthor()
     {
         $this->render(
             'author.php',
@@ -41,7 +41,7 @@ class PostController extends BaseController
         );
     }
 
-    public function executeCreatePost()
+    public function getCreatePost()
     {
         $this->render(
             'createPost.php',
@@ -49,10 +49,11 @@ class PostController extends BaseController
             'Create a post'
         );
     }
-    public function executeShowPost()
+    public function getShowPost()
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
         $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
+
         $this->render(
             'post.php',
             [

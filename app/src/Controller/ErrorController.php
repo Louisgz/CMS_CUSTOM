@@ -4,7 +4,7 @@ namespace App\Controller;
 
 class ErrorController extends BaseController
 {
-  public function executeError404()
+  public function getError404()
   {
     $this->render(
       '404.php',

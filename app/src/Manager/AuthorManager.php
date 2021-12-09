@@ -154,4 +154,25 @@ class AuthorManager extends BaseManager
         $request->execute();
         return true;
     }
+
+    public function checkCredential(string $username, string $password): array
+    {
+        $userInfos = $this->getUser($username);
+
+        if (!$userInfos) return [
+            'type' => 'error',
+            'message' => 'Login incorrect',
+        ];
+
+        $user = new Author($userInfos);
+
+        if (!password_verify($password, $user->getPassword())) return [
+            'type' => 'error',
+            'message' => 'Mot de passe incorrect',
+        ];
+
+        return [
+            'type' => 'success',
+        ];
+    }
 }

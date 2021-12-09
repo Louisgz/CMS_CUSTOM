@@ -42,18 +42,19 @@ session_start();
             <?php
           if (!isset($_SESSION['user'])) {
           ?>
-            <a href="/login-page">
+            <a href="/login">
               <button type="button" class="btn btn-outline-light me-2">Login</button>
             </a>
-            <a href="/signup-page">
+            <a href="/signup">
               <button type="button" class="btn btn-warning">Sign-up</button>
             </a>
+
             <?php
           } else {
           ?>
-            <a href="/log-out">
-              <button type="button" class="btn btn-warning">Log out</button>
-            </a>
+            <form action="/logout" method="post">
+              <button type="submit" class="btn btn-warning">Log out</button>
+            </form>
             <?php
           }
           ?>

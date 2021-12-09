@@ -1,7 +1,7 @@
 <div class="wrapper align-items-center justify-content-start flex-column p-5">
   <h2 class='mb-4'>Bonjour <?= $firstname ?></h2>
   <div class="container" style="max-width: 700px; margin: 0 auto">
-    <form action="update-infos" method='post'>
+    <form action="update" method='post'>
       <div class="input-group mb-3">
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">Username</span>
