@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Fram\Factories\PDOFactory;
 use App\Manager\AuthorManager;
+use App\Manager\CommentManager;
 use App\Manager\PostManager;
 
 class ApiController extends BaseController
@@ -60,6 +61,7 @@ class ApiController extends BaseController
   public function getComments()
   {
     $postManager = new PostManager(PDOFactory::getMysqlConnection());
+    $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
     $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
 
     // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
@@ -85,7 +87,7 @@ class ApiController extends BaseController
             return $this->renderJSON($postManager->getAllCommentFromPostId($postId, $number, true));
         }
       case true:
-        $post = $postManager->getCommentById($commentId);
+        $post = $commentManager->getCommentById($commentId);
         if (!$post) return new ErrorController('No post', 'GET');
         $this->HTTPResponse->setCacheHeader(300);
         return $this->renderJSON($post);
