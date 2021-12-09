@@ -117,7 +117,7 @@ class PostManager extends BaseManager
         return $comments;
     }
 
-    public function getAllCommentFormId(string $id)
+    public function getAllCommentFromPostId(string $id)
     {
         $getComment = 'SELECT * FROM comments WHERE postId = :id';
         $request = $this->bdd->prepare($getComment);

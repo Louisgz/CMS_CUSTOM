@@ -85,12 +85,20 @@ class ApiController extends BaseController
     // }
 
     $commentId = !empty($this->params['id']) ? $this->params['id'] : false;
+    $postId = !empty($this->params['mainId']) ? $this->params['mainId'] : false;
 
     switch ($commentId) {
       case false:
-        $this->HTTPResponse->setCacheHeader(300);
-        isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
-        return $this->renderJSON($postManager->getAllComments($number, true));
+        switch ($postId) {
+          case false:
+            $this->HTTPResponse->setCacheHeader(300);
+            isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
+            return $this->renderJSON($postManager->getAllComments($number, true));
+          case true:
+            $this->HTTPResponse->setCacheHeader(300);
+            isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
+            return $this->renderJSON($postManager->getAllCommentFromPostId($postId, $number, true));
+        }
       case true:
         $post = $postManager->getCommentById($commentId);
         if (!$post) return new ErrorController('No post', 'GET');
