@@ -1,11 +1,3 @@
-<?php
-
-/**
- * @var $user \App\Entity\Author
- * @var $posts \App\Entity\Post[]
- */
-?>
-
 <div class="flex-post-column">
   <h1 style='margin: 3rem 0'>Home page </h1>
   <?php
@@ -19,8 +11,11 @@
       <p><?php echo $post['content'] ?></p>
     </div>
     <div>
-      <button type="button" class="btn btn-primary">
-        <a class="read-more-button" href="/post?id=<?php echo $post['id'] ?>">Lire la suite</a>
+      <a class="read-more-button" href="/post?id=<?php echo $post['id'] ?>">
+        <button type="button" class="btn btn-primary">
+          Lire la suite
+        </button>
+      </a>
     </div>
   </div>
   <?php

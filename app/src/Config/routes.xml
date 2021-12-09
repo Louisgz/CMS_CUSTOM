@@ -16,6 +16,7 @@
     <route path="delete-comment" action="deleteComment" controller="PostController" params='id,postId'/>
     <route path="create-post" action="createPost" controller="PostController"/>
     <route path="delete-post" action="deletePost" controller="PostController" params='id'/>
+    <route path="delete-author" action="deleteAuthor" controller="PostController" params='id'/>
     
     <!--Auth-->
     <route path='signup' action="signup" controller="AuthorController"/>
