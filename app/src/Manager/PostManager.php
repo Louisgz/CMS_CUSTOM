@@ -33,11 +33,12 @@ class PostManager extends BaseManager
     {
         $getPost = 'SELECT * FROM posts WHERE id = :id';
         $request = $this->bdd->prepare($getPost);
-        $request->execute([
+        $request->setFetchMode(PDO::FETCH_ASSOC);
+        $request->execute(array(
             'id' => $id
-        ]);
+        ));
         $post = $request->fetchAll();
-        if ($post) return $post;
+        return $post ? $post : null;
     }
 
     /**
@@ -83,11 +84,11 @@ class PostManager extends BaseManager
      */
     public function deletePostById(string $id)
     {
-        // TODO - Delete post
         $deletePost = 'DELETE FROM posts WHERE id = :id';
         $request = $this->bdd->prepare($deletePost);
-        $request->bindValue(':id', $id, PDO::PARAM_STR);
-        $request->execute();
+        $request->execute(array(
+            'id' => $id
+        ));
         return true;
     }
 
@@ -120,5 +121,15 @@ class PostManager extends BaseManager
             header("Location: /");
         };
         return true;
+    }
+
+    public function postExists($postId)
+    {
+        $request = $this->bdd->prepare('SELECT * FROM `posts` where id = :id');
+        $request->bindParam(':id', $postId, PDO::PARAM_STR);
+        $request->execute();
+        $posts = $request->fetchAll();
+
+        return $posts;
     }
 }

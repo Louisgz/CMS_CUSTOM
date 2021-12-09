@@ -19,6 +19,6 @@
     <!--Routes API-->
     <route path="create-comment" action="createComment" controller="ApiController"/>
     <route path="api/create-post" action="createPost" controller="ApiController"/>
-    <route path="api/posts" action="posts" controller="ApiController" params='number'/>
+    <route path="api/posts" action="posts" controller="ApiController" params='number,id,mainId'/>
 
 </routes>

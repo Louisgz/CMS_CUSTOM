@@ -15,14 +15,45 @@ class ApiController extends BaseController
     $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
 
     // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
-    $postId = !empty($this->params['id']) ? $this->parmas['id'] : false;
-    // $post = $postManager->postExists($postId) ? $postManager->getPostById($postId) : false;
+
+    // if (!$checkUser) {
+    //   $this->HTTPResponse->setCacheHeader(300);
+    //   return new ErrorController('User not connected', 'GET ');
+    // }
+
+    $postId = !empty($this->params['id']) ? $this->params['id'] : false;
 
     switch ($postId) {
       case false:
         $this->HTTPResponse->setCacheHeader(300);
         isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
         return $this->renderJSON($postManager->getAllPosts($number, true));
+      case true:
+        $post = $postManager->getPostById($postId);
+        if (!$post) return new ErrorController('No post', 'GET');
+        $this->HTTPResponse->setCacheHeader(300);
+        return $this->renderJSON($post);
+    }
+  }
+
+  public function deletePosts()
+  {
+    $postManager = new PostManager(PDOFactory::getMysqlConnection());
+    // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
+    // if (!$checkUser) {
+    //   $this->HTTPResponse->setCacheHeader(300);
+    //   return new ErrorController('User not connected', 'GET ');
+    // }
+
+    $postId = !empty($this->params['id']) ? $this->params['id'] : false;
+
+    if ($postId) {
+      var_dump($postId);
+      $post = $postManager->deletePostById($postId);
+      if (!$post) return new ErrorController('No post', 'GET');
+      $this->HTTPResponse->setCacheHeader(300);
+      return $this->renderJSON($postId);
     }
   }
 
