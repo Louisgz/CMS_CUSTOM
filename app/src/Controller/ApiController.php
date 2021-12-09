@@ -41,6 +41,18 @@ class ApiController extends BaseController
     // return $user;
   }
 
+  public function postCreateComment()
+  {
+    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+    $content = $_POST['comment'];
+    $postId = $_GET['id'];
+    if (isset($_SESSION['user'])) $user = new Author($_SESSION['user']);
+
+    $postManager = new PostManager(PDOFactory::getMysqlConnection());
+    $postManager->createComment($postId, $user->getId(), $content);
+    exit();
+  }
+
   public function renderJSON($content)
   {
     $this->HTTPResponse->addHeader('Content-Type: application/json');

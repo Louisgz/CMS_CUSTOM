@@ -11,7 +11,7 @@
   <?php
     foreach ($posts as $post) {
     ?>
-  <div>
+  <div class="post-background">
     <div>
         <a  href="/post?id=<?php echo $post['id'] ?>">
             <h3><?php echo $post['title'] ?></h3>
@@ -19,29 +19,8 @@
       <p><?php echo $post['content'] ?></p>
     </div>
     <div>
-    <a  href="/post?id=<?php echo $post['id'] ?>">
-      <p>
-        commentaires:
-      </p>
-      </a>
-      <?php
-        foreach ($comments as $comment) {
-            if ($comment['postId'] == $post['id']) {
-            ?>
-                <div>
-                    <p>
-                    <?php echo $comment['content'] ?>
-                    </p>
-                </div>
-            <?php
-        }
-    ?>
-
-      <?php
-        }
-        ?>
-      <input type="text" id="commentInput" name="addComment" placeholder="ajouter commentaire">
-      <button id="addComment" class="btn btn-primary" onclick="addComment(<?php echo $post['id'] ?>)">Ajouter</button>
+      <button type="button" class="btn btn-primary">
+        <a class="read-more-button" href="/post?id=<?php echo $post['id'] ?>">Lire la suite</a>
     </div>
   </div>
   <?php
