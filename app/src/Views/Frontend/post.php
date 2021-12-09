@@ -16,7 +16,7 @@ use App\Entity\Author;
                     <h3><?php echo $post['title'] ?></h3>
                     <div>
                         <button type="button" class="btn btn-danger">Delete post</button>
-                        <button type="button" class="btn btn-warning">Edit post</button>
+                        <button type="button" class="btn btn-warning"><a href="/edit-post">Edit post</a></button>
                     </div>
                     <div>
                         <p><?php echo $post['content'] ?></p>
