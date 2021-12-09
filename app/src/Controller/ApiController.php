@@ -57,21 +57,6 @@ class ApiController extends BaseController
     }
   }
 
-  public function postCreatePost()
-  {
-    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
-    $title = $_POST['title'];
-    $content = $_POST['content'];
-    if (isset($_SESSION['user'])) $user = new Author($_SESSION['user']);
-
-    $postManager = new PostManager(PDOFactory::getMysqlConnection());
-    $postManager->createPost($title, $content, $user->getId());
-
-    header('Location: /');
-    exit();
-    // return $user;
-  }
-
   public function getComments()
   {
     $postManager = new PostManager(PDOFactory::getMysqlConnection());
@@ -107,17 +92,6 @@ class ApiController extends BaseController
     }
   }
 
-  public function postCreateComment()
-  {
-    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
-    $content = $_POST['comment'];
-    $postId = $_GET['id'];
-    if (isset($_SESSION['user'])) $user = new Author($_SESSION['user']);
-
-    $postManager = new PostManager(PDOFactory::getMysqlConnection());
-    $postManager->createComment($postId, $user->getId(), $content);
-    exit();
-  }
 
   public function renderJSON($content)
   {

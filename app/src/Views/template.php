@@ -30,7 +30,7 @@ session_start();
             <?php
           if (isset($_SESSION['user'])) {
           ?>
-            <li><a href="/create-post-page" class="nav-link px-2 text-white">Create post</a></li>
+            <li><a href="/create-post" class="nav-link px-2 text-white">Create post</a></li>
             <li><a href="/account" class="nav-link px-2 text-white">My account</a></li>
             <?php
           }

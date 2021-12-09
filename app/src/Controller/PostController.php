@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 // use App\Entity\Author;
+
+use App\Entity\Author;
 use App\Fram\Factories\PDOFactory;
+use App\Manager\AuthorManager;
 // use App\Fram\Utils\Flash;
 use App\Manager\PostManager;
 use App\Manager\CommentManager;
@@ -49,6 +52,22 @@ class PostController extends BaseController
             'Create a post'
         );
     }
+
+    public function postCreatePost()
+    {
+        $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        if (isset($_SESSION['user'])) $user = new Author($_SESSION['user']);
+
+        $postManager = new PostManager(PDOFactory::getMysqlConnection());
+        $postManager->createPost($title, $content, $user->getId());
+
+        header('Location: /');
+        exit();
+        // return $user;
+    }
+
     public function getShowPost()
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
@@ -62,5 +81,30 @@ class PostController extends BaseController
             ],
             'Post'
         );
+    }
+
+
+    public function postCreateComment()
+    {
+        $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+        $content = $_POST['comment'];
+        $postId = $_GET['id'];
+        if (isset($_SESSION['user'])) $user = new Author($_SESSION['user']);
+
+        $postManager = new PostManager(PDOFactory::getMysqlConnection());
+        $postManager->createComment($postId, $user->getId(), $content);
+        exit();
+    }
+
+    public function postDeletePost()
+    {
+        $postManager = new PostManager(PDOFactory::getMysqlConnection());
+        $postId = !empty($this->params['id']) ? $this->params['id'] : false;
+
+        if ($postId) {
+            $post = $postManager->deletePostById($postId);
+        }
+        header('Location: /');
+        exit();
     }
 }
