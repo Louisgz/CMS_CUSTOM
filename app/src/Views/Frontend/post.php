@@ -36,8 +36,10 @@
                         <?php
                     }
                     ?>
-                    <input type="text" id="commentInput" name="addComment" placeholder="ajouter commentaire">
-                    <button id="addCommentSinglePost" class="btn btn-primary" onclick="addComment(<?php echo $post['id'] ?>)">Ajouter</button>
+                    <form action="create-comment/?id=<?php echo($_GET['id']) ?>" method='post'>
+                    <input type="text" id="commentInput" name="comment" placeholder="ajouter commentaire">
+                    <input type="submit" value="Create comment">
+                    </form>
                 </div>
             </div>
         <?php

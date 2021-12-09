@@ -18,5 +18,6 @@
 
     <!--Routes API-->
     <route path="create-post" action="createPost" controller="ApiController"/>
+    <route path="create-comment" action="createComment" controller="ApiController"/>
 
 </routes>

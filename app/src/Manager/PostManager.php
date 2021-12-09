@@ -80,7 +80,7 @@ class PostManager extends BaseManager
         // TODO - Delete post
         $deletePost = 'DELETE FROM posts WHERE id = :id';
         $request = $this->bdd->prepare($deletePost);
-        $request->bindValue(':id', $id, PDO::PARAM_INT);
+        $request->bindValue(':id', $id, PDO::PARAM_STR);
         $request->execute();
         return true;
     }
@@ -89,9 +89,26 @@ class PostManager extends BaseManager
     {
         $getComment = 'SELECT * FROM comments WHERE postId = :id';
         $request = $this->bdd->prepare($getComment);
-        $request->bindValue(':id', $id, PDO::PARAM_INT);
+        $request->bindValue(':id', $id, PDO::PARAM_STR);
         $request->execute();
         $comments = $request->fetchAll(PDO::FETCH_ASSOC);
         return $comments;
+    }
+
+    public function createComment($postId, $authorId, $content)
+    {
+        $newId = uniqid();
+        $insert = 'INSERT INTO comments (`id`, `postId`, `authorId`, `content`) VALUES (:id, :postId, :authorId, :content)';
+        $request = $this->bdd->prepare($insert);
+        $request->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $request->bindValue(':authorId', $authorId, PDO::PARAM_INT);
+        $request->bindValue(':content', $content, PDO::PARAM_INT);
+        $request->execute(array(
+            'id' => $newId,
+            'postId' => $postId,
+            'authorId' => $authorId,
+            'content' => $content
+        ));
+        return true;
     }
 }

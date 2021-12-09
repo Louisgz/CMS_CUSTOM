@@ -26,4 +26,19 @@ class ApiController extends BaseController
     exit();
     // return $user;
   }
+
+  public function executeCreateComment()
+  {
+    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+    $content = $_POST['comment'];
+    $postId = $_GET['id'];
+  //   echo("content: ".  $content. " postid :".  $postId 
+  // ) ;
+    if (isset($_SESSION['user'])) $user = new Author($_SESSION['user']);
+
+    $postManager = new PostManager(PDOFactory::getMysqlConnection());
+    $postManager->createComment($postId, $user->getId(), $content);
+    // header('Location: /');
+    exit();
+  }
 }
