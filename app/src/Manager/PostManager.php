@@ -101,20 +101,25 @@ class PostManager extends BaseManager
         return $comments;
     }
 
-    public function createComment($postId, $authorId, $content)
+    public function createComment(string $postId, string $authorId, string $content)
     {
+        var_dump("createComment");
         $newId = uniqid();
-        $insert = 'INSERT INTO comments (`id`, `postId`, `authorId`, `content`) VALUES (:id, :postId, :authorId, :content)';
+
+        $insert = 'INSERT INTO `comments` (`id`, `postId`, `authorId`, `content`) VALUES (:id, :postId, :authorId, :content)';
         $request = $this->bdd->prepare($insert);
-        $request->bindValue(':postId', $postId, PDO::PARAM_INT);
-        $request->bindValue(':authorId', $authorId, PDO::PARAM_INT);
-        $request->bindValue(':content', $content, PDO::PARAM_INT);
-        $request->execute(array(
-            'id' => $newId,
+        var_dump($insert);
+        // $request->bindParam(':id', $newId, PDO::PARAM_STR);
+        // $request->bindParam(':postId', $postId, PDO::PARAM_STR);
+        // $request->bindParam(':authorId', $authorId, PDO::PARAM_STR);
+        // $request->bindParam(':content', $content, PDO::PARAM_STR);
+        $request->execute(array
+          (  'id' => $newId,
             'postId' => $postId,
             'authorId' => $authorId,
-            'content' => $content
-        ));
+            'content' => $content)
+        );
+        
         return true;
     }
 }

@@ -41,7 +41,7 @@ class ApiController extends BaseController
     // return $user;
   }
 
-  public function executeCreateComment()
+  public function postCreateComment()
   {
     $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
     $content = $_POST['comment'];
@@ -55,7 +55,7 @@ class ApiController extends BaseController
     // header('Location: /');
     exit();
   }
-  
+
   public function renderJSON($content)
   {
     $this->HTTPResponse->addHeader('Content-Type: application/json');
