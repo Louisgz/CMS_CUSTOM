@@ -21,7 +21,7 @@
     <!--Auth-->
     <route path='signup' action="signup" controller="AuthorController" params="firstname,lastname,username"/>
     <route path='login' action="login" controller="AuthController" />
-    <route path='update' action="update" controller="AuthController"/>
+    <route path='update' action="updateAuthorInfos" controller="AuthorController"/>
     <route path='logout' action="logout" controller="AuthorController"/>
 
     <!--Routes API-->

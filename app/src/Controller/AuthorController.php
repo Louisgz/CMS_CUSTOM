@@ -167,4 +167,50 @@ class AuthorController extends BaseController
     header('Location: /');
     exit();
   }
+
+  public function postUpdateAuthorInfos()
+  {
+    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+    $user = new Author($_SESSION['user']);
+    $id = $user->getId();
+    $username = $user->getUsername();
+    $isAdmin = $_POST['isAdmin'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    if (isset($_POST['isAdmin']) && $_POST['isAdmin'] == '1') {
+      $isAdmin = 1;
+    } else {
+      $isAdmin = 0;
+    }
+    $password = $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
+
+    $isValid = true;
+    $message = '';
+
+    if (!$firstname) {
+      $isValid = false;
+      $message = "Merci de renseigner un firstname";
+    }
+
+    if (!$lastname) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un lastname";
+    }
+
+    if (!$username) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un username";
+    }
+
+    if (!$isValid) {
+      Flash::setFlash('alert', $message);
+    } else {
+      $user = $authorManager->updateAuthor($firstname, $lastname, $username, $password, $isAdmin, $id);
+      Flash::setFlash('success', 'Vos informations ont bien étés mises à jour !');
+      $_SESSION['user'] = $user;
+    }
+
+    header("Location: /account");
+    exit();
+  }
 }

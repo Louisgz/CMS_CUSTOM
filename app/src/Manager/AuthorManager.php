@@ -55,23 +55,23 @@ class AuthorManager extends BaseManager
         ];
     }
 
-    public function updateAuthor($firstname, $lastname, $username, $password, $idAdmin, $id)
+    public function updateAuthor($firstname, $lastname, $username, $password, $isAdmin, $id)
     {
         $insert = "UPDATE `authors` SET `firstname` = :firstname, `lastname` = :lastname, `isAdmin` = :isAdmin" . ($password ? ", `password` = :pw" : '') . " WHERE id = :id";
         $request = $this->bdd->prepare($insert);
         $args = array(
             'firstname' => $firstname,
             'lastname' => $lastname,
-            'isAdmin' => $idAdmin,
+            'isAdmin' => $isAdmin,
             'id' => $id,
-            'pw' => $password
         );
+        $password && $args['pw'] = $password;
         $request->execute($args);
         return array(
             'firstname' => $firstname,
             'lastname' => $lastname,
-            'password' => $password || $_GET['user']['password'],
-            'isAdmin' => $idAdmin,
+            'password' => $password || $_SESSION['user']['password'],
+            'isAdmin' => $isAdmin,
             'id' => $id,
             'username' => $username,
         );
