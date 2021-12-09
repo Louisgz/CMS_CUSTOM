@@ -18,9 +18,10 @@
       </a>
       <p><?php echo $post['content'] ?></p>
     </div>
-    <div>
+    <div>        
+      <a class="read-more-button" href="/post?id=<?php echo $post['id'] ?>">
       <button type="button" class="btn btn-primary">
-        <a class="read-more-button" href="/post?id=<?php echo $post['id'] ?>">Lire la suite</a>
+        Lire la suite</button></a>
     </div>
   </div>
   <?php

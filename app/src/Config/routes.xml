@@ -13,6 +13,7 @@
 
     <!--Routes actions front-->
     <route path="create-comment" action="createComment" controller="PostController"/>
+    <route path="delete-comment" action="deleteComment" controller="PostController" params='id,postId'/>
     <route path="create-post" action="createPost" controller="PostController"/>
     <route path="delete-post" action="deletePost" controller="PostController" params='id'/>
     

@@ -8,39 +8,52 @@
 use App\Entity\Author;
 ?>
 <div class="flex-post-column">
+  <?php
+    foreach ($posts as $post) {
+    ?>
+  <div class="single-post-page">
+    <div class="single-post-background">
+      <h2><?php echo $post['title'] ?></h2>
+      <div>
         <?php
-        foreach ($posts as $post) {
-            ?>
-            <div class="single-post-page">
-                <div class="single-post-background">                        
-                    <h3><?php echo $post['title'] ?></h3>
-                    <div>
-                    <form action="delete-post?id=<?= $_GET['id'] ?>" method="post">
-                    <button type="submit" class="btn btn-danger">Delete post</button>
-                    </form>
-                        <button type="button" class="btn btn-warning"><a href="/edit-post?id=<?= $_GET['id'] ?>">Edit post</a></button>
-                    </div>
-                    <div>
-                        <p><?php echo $post['content'] ?></p>
-                    </div>
-                </div>
-                <div>
-                         <?php   if (isset($_SESSION['user'])){ ?>
-                            <div>
-                                <h4>Ajouter un commentaire :</h4>
-                            </div>
-                        <form action="create-comment/?id=<?php echo($_GET['id']) ?>" method='post'>
-                            <input type="text" id="commentInput" name="comment" placeholder="ajouter commentaire">
-                            <input class="btn btn-success" type="submit" value="add comment">
-                            
-                        </form>
+                    $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+                    if ($user && ($user['isAdmin'] === 1 || $user['id'] === $post['authorId'])) {
+                    ?>
+        <form action="delete-post?id=<?= $_GET['id'] ?>" method="post">
+          <button type="submit" class="btn btn-danger">Delete post</button>
+        </form>
+        </form>
+        <div>
+        <a href="/edit-post?id=<?= $_GET['id'] ?>">
+            <button type="button" class="btn btn-warning">Edit post</button>
+            </a>
+        </div>
+        <?php
+
+                    }
+                    ?>
+      </div>
+      <div>
+        <p><?php echo $post['content'] ?></p>
+      </div>
+    </div>
+    <div>
+      <?php if (isset($_SESSION['user'])) { ?>
+      <div>
+        <h4>Ajouter un commentaire :</h4>
+      </div>
+      <form action="create-comment/?id=<?= $_GET['id'] ?>" method='post'>
+        <input type="text" id="commentInput" name="comment" placeholder="ajouter commentaire">
+        <input class="btn btn-success" type="submit" value="add comment">
+
+      </form>
 
       <?php } ?>
     </div>
     <div class="single-post-background">
-      <p>
-        commentaires:
-      </p>
+      <h4>
+        All Comments:
+      </h4>
       <?php
                 foreach ($comments as $comment) {
                     if ($comment['postId'] == $post['id']) {
@@ -51,7 +64,9 @@ use App\Entity\Author;
             <?php echo $comment['content'] ?>
           </p>
         </div>
-        <button type="button" class="btn btn-danger">Delete post</button>
+        <form action="delete-comment?id=<?= $comment['id'] ?>&postId=<?= $post['id'] ?>" method='post'>
+          <button type="submit" class="btn btn-danger">Delete comment</button>
+        </form>
       </div>
       <?php
                     }

@@ -18,16 +18,17 @@ class CommentManager extends BaseManager
 
         return $comments;
     }
-     /**
+    /**
      * @return Comment
      */
-    public function getCommentById(string $id)
+    public function getCommentById($id)
     {
         $getComment = 'SELECT * FROM comments WHERE id = :id';
         $request = $this->bdd->prepare($getComment);
-        $request->execute(array($id));
-        $comment = $request->fetch(PDO::FETCH_ASSOC);
-        return new Comment($comment);
+        $request->bindValue(':id', $id, PDO::PARAM_STR);
+        $request->execute();
+        $comments = $request->fetchAll(PDO::FETCH_ASSOC);
+        return $comments;
     }
     public function createComment($content, $authorId, $postId)
     {
@@ -45,7 +46,8 @@ class CommentManager extends BaseManager
         ));
     }
 
-    public function deleteComment(string $id){
+    public function deleteComment(string $id)
+    {
         $deleteComment = 'DELETE FROM comments WHERE id = :id';
         $request = $this->bdd->prepare($deleteComment);
         $request->bindParam(':id', $id);
@@ -53,7 +55,17 @@ class CommentManager extends BaseManager
         return true;
     }
 
-    public function editComment(string $id, string $content, string $authorId,  string $postId){
+    public function deleteCommentByPostId(string $postId)
+    {
+        $deleteComment = 'DELETE FROM comments WHERE postId = :postId';
+        $request = $this->bdd->prepare($deleteComment);
+        $request->bindParam(':postId', $postId);
+        $request->execute();
+        return true;
+    }
+
+    public function editComment(string $id, string $content, string $authorId,  string $postId)
+    {
         $editComment = 'UPDATE comments SET content = :content, author = :author, postId = :postId WHERE id = :id';
         $request = $this->bdd->prepare($editComment);
         $request->bindParam(':id', $id);
@@ -63,5 +75,4 @@ class CommentManager extends BaseManager
         $request->execute();
         return true;
     }
-
 }
