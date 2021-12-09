@@ -98,8 +98,10 @@ class AuthorManager extends BaseManager
     {
         $select = "SELECT * FROM authors";
         $request = $this->bdd->prepare($select);
-        $request->fetchAll(PDO::FETCH_CLASS, 'Author');
-        return $request->fetchAll();
+        $request->execute();
+        $request->setFetchMode(PDO::FETCH_CLASS, 'Author');
+        $users = $request->fetchAll();
+        return $users;
     }
 
     /**
