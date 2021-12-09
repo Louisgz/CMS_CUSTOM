@@ -11,6 +11,7 @@ class Router
         $xml = new \DOMDocument();
         $xml->load(__DIR__ . './../Config/routes.xml');
         $routes = $xml->getElementsByTagName('route');
+        $method = $_SERVER['REQUEST_METHOD'];
 
         isset($_GET['p']) ? $path = strtolower(htmlspecialchars($_GET['p'])) : $path = '/';
 
@@ -25,10 +26,10 @@ class Router
                         $params[$param] = $_GET[$param];
                     }
                 }
-                return new $controllerClass($action, $params);
+                return new $controllerClass($action, $method, $params);
             }
         }
 
-        return new ErrorController('error404');
+        return new ErrorController('error404', $method);
     }
 }

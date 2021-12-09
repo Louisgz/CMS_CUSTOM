@@ -6,18 +6,19 @@
     <route path="/" action="index" controller="PostController"/>
     <route path="post" action="showPost" controller="PostController" params="id"/>
     <route path="create-post-page" action="createPost" controller="PostController"/>
-    <route path="login-page" action="loginPage" controller="AuthorController" params="username"/>
-    <route path="signup-page" action="signupPage" controller="AuthorController"/>
+    <route path="login" action="login" controller="AuthorController" params="username"/>
+    <route path="signup" action="signup" controller="AuthorController"/>
     <route path="account" action="account" controller="AuthorController"/>
     
     <!--Auth-->
-    <route path='signup' action="signup" controller="AuthController"/>
+    <route path='signup' action="signup" controller="AuthorController"/>
     <route path='login' action="login" controller="AuthController" />
-    <route path='update-infos' action="update" controller="AuthController"/>
-    <route path='log-out' action="logout" controller="AuthController"/>
+    <route path='update' action="update" controller="AuthController"/>
+    <route path='logout' action="logout" controller="AuthorController"/>
 
     <!--Routes API-->
-    <route path="create-post" action="createPost" controller="ApiController"/>
     <route path="create-comment" action="createComment" controller="ApiController"/>
+    <route path="api/create-post" action="createPost" controller="ApiController"/>
+    <route path="api/posts" action="posts" controller="ApiController"/>
 
 </routes>

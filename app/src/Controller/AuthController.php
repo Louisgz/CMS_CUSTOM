@@ -9,45 +9,7 @@ use App\Manager\AuthorManager;
 
 class AuthController extends BaseController
 {
-  public function executeSignup()
-  {
-    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
-    $username = $_POST['username'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    //TODO Effectuer toutes les verifs pour les credentials
-
-    $user = $authorManager->createNewAuthor($firstname, $lastname, $username, $password);
-    $_SESSION['user'] = $user;
-
-    header("Location: /account");
-    exit();
-  }
-  public function executeLogin()
-  {
-    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    //TODO Effectuer toutes les verifs pour les credentials
-
-    $res = $authorManager->login($username, $password);
-
-    if ($res['type'] == 'error') {
-      Flash::setFlash('alert', $res['message']);
-      header("Location: /login-page");
-      exit();
-    } else {
-      header("Location: /account");
-      exit();
-    }
-
-    // $_SESSION['user'] = $user;
-  }
-
-  public function executeUpdate()
+  public function postUpdate()
   {
     $user = new Author($_SESSION['user']);
     $id = $user->getId();
@@ -70,13 +32,6 @@ class AuthController extends BaseController
     $_SESSION['user'] = $user;
 
     header("Location: /account");
-    exit();
-  }
-
-  public function executeLogout()
-  {
-    $_SESSION['user'] = null;
-    header('Location: /');
     exit();
   }
 

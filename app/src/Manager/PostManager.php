@@ -11,10 +11,16 @@ class PostManager extends BaseManager
     /**
      * @return array
      */
-    public function getAllPosts()
+    public function getAllPosts(int $number = 5, bool $returnArray = false)
     {
-        $request = $this->bdd->query('SELECT * FROM posts');
-        $request->setFetchMode(PDO::FETCH_CLASS, 'Post');
+        $request = $this->bdd->prepare('SELECT * FROM `posts` LIMIT :limite');
+        $request->bindParam(':limite', $number, PDO::PARAM_INT);
+        $request->execute();
+        if ($returnArray) {
+            $request->setFetchMode(PDO::FETCH_ASSOC);
+        } else {
+            $request->setFetchMode(PDO::FETCH_CLASS, 'Post');
+        }
         $posts = $request->fetchAll();
 
         return $posts;
@@ -41,7 +47,7 @@ class PostManager extends BaseManager
     public function createPost($title, $content, $authorId)
     {
         $newId = uniqid();
-        $insert = 'INSERT INTO posts (`id`, `title`, `content`, `authorId`) VALUES (:id, :title, :content, :authorId)';
+        $insert = 'INSERT INTO `posts` (`id`, `title`, `content`, `authorId`) VALUES (:id, :title, :content, :authorId)';
         $request = $this->bdd->prepare($insert);
         $request->execute(array(
             'id' => $newId,
