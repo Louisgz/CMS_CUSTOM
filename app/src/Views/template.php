@@ -13,6 +13,7 @@ session_start();
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/global.css">
     <title><?= $title; ?></title>
+    <link rel="shortcut icon" href="./public/images/logo.png" type="image/x-icon">
   </head>
 
   <body>
