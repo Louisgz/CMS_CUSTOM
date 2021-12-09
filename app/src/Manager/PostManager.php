@@ -3,6 +3,7 @@
 namespace App\Manager;
 
 use App\Entity\Post;
+use App\Fram\Factories\PDOFactory;
 use PDO;
 
 
@@ -89,6 +90,10 @@ class PostManager extends BaseManager
         $request->execute(array(
             'id' => $id
         ));
+
+        $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
+        $commentManager->deleteCommentByPostId($id);
+
         return true;
     }
 
@@ -105,16 +110,6 @@ class PostManager extends BaseManager
         $posts = $request->fetchAll();
 
         return $posts;
-    }
-
-    public function getCommentById($id)
-    {
-        $getComment = 'SELECT * FROM comments WHERE id = :id';
-        $request = $this->bdd->prepare($getComment);
-        $request->bindValue(':id', $id, PDO::PARAM_STR);
-        $request->execute();
-        $comments = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $comments;
     }
 
     public function getAllCommentFromPostId(string $id)
