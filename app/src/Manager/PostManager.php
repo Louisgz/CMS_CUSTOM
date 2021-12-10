@@ -64,17 +64,16 @@ class PostManager extends BaseManager
      * @param Post $post
      * @return Post|bool
      */
-    public function updatePost(Post $post)
+    public function updatePost( $title, $content, $authorId, $id)
     {
         // TODO - getPostById($post->getId())
-        $updatePost = 'UPDATE posts SET date = :date, title = :title, content = :content, authorId = :authorId WHERE id = :id';
+        $updatePost = 'UPDATE posts SET title = :title, content = :content, authorId = :authorId WHERE id = :id';
         $request = $this->bdd->prepare($updatePost);
         $request->execute(array(
-            'id' => $post->getId(),
-            'date' => $post->getDate(),
-            'title' => $post->getTitle(),
-            'content' => $post->getContent(),
-            'author' => $post->getauthorId(),
+            'id' => $id,
+            'title' => $title,
+            'content' => $content,
+            'authorId' => $authorId,
         ));
         return true;
     }
