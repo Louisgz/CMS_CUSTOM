@@ -114,7 +114,7 @@ class AuthorController extends BaseController
       'username' => $_POST['username'],
       'password' => $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : false,
     );
-    $isValid = false;
+    $isValid = true;
     $message = '';
 
     if (!$values['firstname']) {
@@ -142,6 +142,7 @@ class AuthorController extends BaseController
       !$message && $message = "L'utilisateur existe déjà ! ";
     }
 
+
     if (!$isValid) {
       Flash::setFlash('alert', $message);
       $args = '?';
@@ -153,6 +154,7 @@ class AuthorController extends BaseController
       header("Location: /signup" . $args);
       exit();
     }
+
     $user = $authorManager->createNewAuthor($values['firstname'], $values['lastname'], $values['username'], $values['password']);
     $_SESSION['user'] = $user;
 
