@@ -87,7 +87,7 @@ class AuthorController extends BaseController
 
   public function getListUsers()
   {
-    if (isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] === 1) {
+    if (isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] == 1) {
       $user = new Author($_SESSION['user']);
       $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
 
@@ -114,7 +114,7 @@ class AuthorController extends BaseController
       'username' => $_POST['username'],
       'password' => $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : false,
     );
-    $isValid = false;
+    $isValid = true;
     $message = '';
 
     if (!$values['firstname']) {
