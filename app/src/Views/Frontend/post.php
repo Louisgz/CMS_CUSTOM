@@ -9,16 +9,16 @@ use App\Entity\Author;
 ?>
 <div class="flex-post-column">
   <?php
-    foreach ($posts as $post) {
-    ?>
+  foreach ($posts as $post) {
+  ?>
   <div class="single-post-page">
     <div class="single-post-background">
       <h2><?php echo $post['title'] ?></h2>
       <div class="button-flex">
         <?php
-                    $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-                    if ($user && ($user['isAdmin'] === 1 || $user['id'] === $post['authorId'])) {
-                    ?>
+          $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+          if ($user && ($user['isAdmin'] == 1 || $user['id'] === $post['authorId'])) {
+          ?>
         <form action="delete-post?id=<?= $_GET['id'] ?>" method="post">
           <button type="submit" class="btn btn-danger">Delete post</button>
         </form>
@@ -30,8 +30,8 @@ use App\Entity\Author;
         </div>
         <?php
 
-                    }
-                    ?>
+          }
+          ?>
       </div>
       <div>
         <p><?php echo $post['content'] ?></p>
@@ -55,9 +55,9 @@ use App\Entity\Author;
         All Comments:
       </h4>
       <?php
-                foreach ($comments as $comment) {
-                    if ($comment['postId'] == $post['id']) {
-                ?>
+        foreach ($comments as $comment) {
+          if ($comment['postId'] == $post['id']) {
+        ?>
       <div>
         <div>
           <p>
@@ -69,17 +69,17 @@ use App\Entity\Author;
         </form>
       </div>
       <?php
-                    }
-                    ?>
+          }
+          ?>
 
       <?php
-                }
-                ?>
+        }
+        ?>
     </div>
   </div>
   <?php
-    }
+  }
 
-    ?>
+  ?>
 
 </div>
