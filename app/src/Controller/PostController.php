@@ -20,27 +20,28 @@ class PostController extends BaseController
     public function getIndex()
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
+        $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
         $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
         $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
         $posts = $postManager->getAllPosts();
         $comments = $commentManager->getAllComments();
 
-        // $postsWithAuhtor = array();
-        // foreach ($posts as  $post) {
-        //     $post = new Post($post);
-        //     $author = $authorManager->getSingleAuthor($post->getAuthorId());
-        //     $postsWithAuhtor[] = array(
-        //         'author' => $author,
-        //         $post => $post,
-        //     );
-        // };
-
+        $postsWithAuthor = array();
+        foreach ($posts as  $post) {
+            $authorId = $post['authorId'];
+            $author = $postManager->getAuthorById($authorId);
+            $postsWithAuthor[] = array(
+                'author' => $author,
+                'post' => $post
+            );
+        };
 
         $this->render(
             'home.php',
             [
-                'posts' => $posts,
-                'comments' => $comments
+                'posts' => $postsWithAuthor,
+                'comments' => $comments,
+
             ],
             'Home page'
         );
