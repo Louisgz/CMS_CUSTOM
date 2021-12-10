@@ -22,7 +22,7 @@ class ApiController extends BaseController
     //   return new ErrorController('User not connected', 'GET ');
     // }
 
-    $postId = !empty($this->params['id']) ? $this->params['id'] : false;
+    $postId = !empty($this->params['postId']) ? $this->params['postId'] : false;
 
     switch ($postId) {
       case false:
@@ -58,7 +58,7 @@ class ApiController extends BaseController
     //   return new ErrorController('User not connected', 'GET ');
     // }
 
-    $postId = !empty($this->params['id']) ? $this->params['id'] : false;
+    $postId = !empty($this->params['postId']) ? $this->params['postId'] : false;
 
     if ($postId) {
       var_dump($postId);
@@ -82,8 +82,8 @@ class ApiController extends BaseController
     //   return new ErrorController('User not connected', 'GET ');
     // }
 
-    $commentId = !empty($this->params['id']) ? $this->params['id'] : false;
-    $postId = !empty($this->params['mainId']) ? $this->params['mainId'] : false;
+    $commentId = !empty($this->params['commentId']) ? $this->params['commentId'] : false;
+    $postId = !empty($this->params['postId']) ? $this->params['postId'] : false;
 
     switch ($commentId) {
       case false:
@@ -105,9 +105,25 @@ class ApiController extends BaseController
     }
   }
 
-  public function postComment()
+  public function postComments()
   {
-    //TODO Fonction pour ajouter un commentaire par API
+    $postManager = new PostManager(PDOFactory::getMysqlConnection());
+    $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
+    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+
+    // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
+    // if (!$checkUser) {
+    //   $this->HTTPResponse->setCacheHeader(300);
+    //   return new ErrorController('User not connected', 'GET ');
+    // }
+
+    $authorId = !empty($this->params['authorId']) ? $this->params['authorId'] : false;
+    $postId = !empty($this->params['postId']) ? $this->params['postId'] : false;
+    $content = file_get_contents('php://input');
+
+    isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
+    $this->renderJSON($commentManager->createComment($content, $authorId, $postId));
   }
 
   public function putComment()

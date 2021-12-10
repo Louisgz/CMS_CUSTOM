@@ -43,7 +43,7 @@ class AuthorManager extends BaseManager
 
         $user = new Author($userInfos);
 
-        if (password_verify($password, $user->getPassword())) return [
+        if (!password_verify($password, $user->getPassword())) return [
             'type' => 'error',
             'message' => 'Mot de passe incorrect',
             'username' =>  $username,

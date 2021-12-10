@@ -25,7 +25,7 @@
     <route path='logout' action="logout" controller="AuthorController"/>
 
     <!--Routes API-->
-    <route path="api/posts" action="posts" controller="ApiController" params='number,id,mainId'/>
-    <route path="api/comments" action="comments" controller="ApiController" params='number,id,mainId'/>
+    <route path="api/posts" action="posts" controller="ApiController" params='number,postId,commentId'/>
+    <route path="api/comments" action="comments" controller="ApiController" params='number,postId,commentId'/>
 
 </routes>
