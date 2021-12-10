@@ -8,7 +8,7 @@
       <input type="text" id="lastname" name="lastname" placeholder="lastname" value='<?= $lastname ?>'>
       <input type="text" id="username" name="username" placeholder="username" value='<?= $username ?>'>
       <input type="password" id="password" name="password" placeholder="password">
-      <input type="submit" value="Log In">
+      <input type="submit" value="Sign up">
     </form>
 
   </div>
