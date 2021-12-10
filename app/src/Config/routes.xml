@@ -6,6 +6,7 @@
     <route path="/" action="index" controller="PostController"/>
     <route path="post" action="showPost" controller="PostController" params="id"/>
     <route path="edit-post" action="editPost" controller="PostController" params="id"/>
+    <route path="edit-comment" action="editComment" controller="PostController" params="id"/>
     <route path="create-post" action="createPost" controller="PostController"/>
     <route path="login" action="login" controller="AuthorController" params="username"/>
     <route path="signup" action="signup" controller="AuthorController"/>

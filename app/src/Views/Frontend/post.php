@@ -64,9 +64,22 @@ use App\Entity\Author;
             <?php echo $comment['content'] ?>
           </p>
         </div>
+        <div class="button-flex">
+        <?php
+            $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+            if ($user && ($user['isAdmin'] === 1 || $user['id'] === $comment['authorId'])) {
+            ?>
         <form action="delete-comment?id=<?= $comment['id'] ?>&postId=<?= $post['id'] ?>" method='post'>
           <button type="submit" class="btn btn-danger">Delete comment</button>
         </form>
+        <a href="/edit-comment?id=<?= $comment['id'] ?>&postId=<?= $post['id'] ?>">
+          <button type="submit" class="btn btn-warning">edit comment</button>
+        </a>
+        <?php
+
+        }
+        ?>
+            </div>
       </div>
       <?php
           }

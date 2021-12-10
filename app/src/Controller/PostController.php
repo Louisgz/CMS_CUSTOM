@@ -127,6 +127,26 @@ class PostController extends BaseController
         exit();
     }
 
+    public function getEditComment()
+    {
+        $postManager = new PostManager(PDOFactory::getMysqlConnection());
+
+        $this->render(
+            'editComment.php',
+            [
+                'comment' => $postManager->getCommentById($_GET['id']),
+            ],
+            'edit a Comment'
+        );
+    }
+    public function postEditComment()
+    {
+        $postManager = new PostManager(PDOFactory::getMysqlConnection());
+        $postManager->postUpdateComment( $_GET['postId'], $_SESSION['user']['id'], $_POST['content'], $_GET['id']);
+        header('Location: /post?id=' . $_GET['postId']);
+        exit();
+    }
+
     public function postDeleteComment()
     {
         $commentManager = new CommentManager(PDOFactory::getMysqlConnection());

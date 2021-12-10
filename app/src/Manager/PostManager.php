@@ -142,6 +142,34 @@ class PostManager extends BaseManager
         return true;
     }
 
+    public function getCommentById(string $id)
+    {
+        $getComment = 'SELECT * FROM `comments` WHERE id = :id';
+        $request = $this->bdd->prepare($getComment);
+        $request->setFetchMode(PDO::FETCH_ASSOC);
+        $request->execute(array(
+            'id' => $id
+        ));
+        $comment = $request->fetchAll();
+        return $comment ? $comment : null;
+    }
+
+    public function postUpdateComment(string $postId, string $authorId, string $content, string $id)
+    {
+        $updateComment = 'UPDATE `comments` SET `postId` = :postId, `authorId` = :authorId, `content` = :content WHERE `id` = :id';
+        $request = $this->bdd->prepare($updateComment);
+        $request->execute(
+            array(
+                'id' => $id,
+                'postId' => $postId,
+                'authorId' => $authorId,
+                'content' => $content
+            )
+        );
+        header("Location: /post?id=$postId");
+        return true;
+    }
+
     public function postExists($postId)
     {
         $request = $this->bdd->prepare('SELECT * FROM `posts` where id = :id');
