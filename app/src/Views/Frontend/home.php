@@ -6,7 +6,7 @@
   <div class="post-container">
     <div>
 
-      <a href="/post?id=<?php echo $post['id'] ?>">
+      <a href="/post?id=<?php echo $post['post']['id'] ?>">
         <h3><?php echo $post['post']['title'] ?></h3>
       </a>
       <p style="font-size: 12px;"> écrit par : <?= $post['author']['username'] ?></p>

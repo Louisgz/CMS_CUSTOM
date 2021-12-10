@@ -61,7 +61,18 @@ class ApiController extends BaseController
 
   public function putPosts()
   {
-    //TODO Fonction pour updater un post par API
+    $postId = !empty($this->params['postId']) ? $this->params['postId'] : false;
+    $json = file_get_contents('php://input');
+    $body = json_decode($json);
+    $title = $body->{'title'};
+    $content = $body->{'content'};
+
+    if ($postId && $content) {
+      $postManager = new PostManager(PDOFactory::getMysqlConnection());
+      $newPost = $postManager->updatePost($postId, $title, $content);
+      $this->HTTPResponse->setCacheHeader(300);
+      return $this->renderJSON($newPost);
+    }
   }
 
 
@@ -88,9 +99,7 @@ class ApiController extends BaseController
 
   public function getComments()
   {
-    $postManager = new PostManager(PDOFactory::getMysqlConnection());
     $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
-    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
 
     // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
@@ -108,11 +117,11 @@ class ApiController extends BaseController
           case false:
             $this->HTTPResponse->setCacheHeader(300);
             isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
-            return $this->renderJSON($postManager->getAllComments($number, true));
+            return $this->renderJSON($commentManager->getAllComments($number, true));
           case true:
             $this->HTTPResponse->setCacheHeader(300);
             isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
-            return $this->renderJSON($postManager->getAllCommentFromPostId($postId, $number, true));
+            return $this->renderJSON($commentManager->getAllCommentFromPostId($postId, $number, true));
         }
       case true:
         $post = $commentManager->getCommentById($commentId);

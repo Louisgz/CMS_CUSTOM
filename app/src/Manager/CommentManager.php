@@ -7,21 +7,32 @@ use PDO;
 
 class CommentManager extends BaseManager
 {
-    /**
-     * @return array
-     */
-    public function getAllComments()
+    public function getAllComments($number = null, bool $returnArray = false)
     {
-        $request = $this->bdd->query('SELECT * FROM comments');
-        $request->setFetchMode(PDO::FETCH_CLASS, 'Comment');
-        $comments = $request->fetchAll();
+        $request = $this->bdd->prepare('SELECT * FROM `comments`' . ($number ? 'LIMIT :limite' : ''));
+        $request->bindParam(':limite', $number, PDO::PARAM_INT);
+        $request->execute();
+        if ($returnArray) {
+            $request->setFetchMode(PDO::FETCH_ASSOC);
+        } else {
+            $request->setFetchMode(PDO::FETCH_CLASS, 'Comment');
+        }
+        $posts = $request->fetchAll();
 
+        return $posts;
+    }
+
+    public function getAllCommentFromPostId(string $id)
+    {
+        $getComment = 'SELECT * FROM comments WHERE postId = :id';
+        $request = $this->bdd->prepare($getComment);
+        $request->bindValue(':id', $id, PDO::PARAM_STR);
+        $request->execute();
+        $comments = $request->fetchAll(PDO::FETCH_ASSOC);
         return $comments;
     }
-    /**
-     * @return Comment
-     */
-    public function getCommentById($id)
+
+    public function getCommentById(string $id)
     {
         $getComment = 'SELECT * FROM comments WHERE id = :id';
         $request = $this->bdd->prepare($getComment);
@@ -30,7 +41,8 @@ class CommentManager extends BaseManager
         $comments = $request->fetchAll(PDO::FETCH_ASSOC);
         return $comments;
     }
-    public function createComment($content, $authorId, $postId)
+
+    public function createComment(string $content, string $authorId, string $postId)
     {
         $setNewId = uniqid();
         $createComment = 'INSERT INTO comments (id, content, authorId, postId) VALUES (:id, :content, :authorId, :postId)';
@@ -63,7 +75,7 @@ class CommentManager extends BaseManager
         return true;
     }
 
-    public function editComment(string $id, string $content, string $authorId,  string $postId)
+    public function editComment(string $id, string $content, string $authorId, string $postId)
     {
         $editComment = 'UPDATE comments SET content = :content, authorId = :authorId, postId = :postId WHERE id = :id';
         $request = $this->bdd->prepare($editComment);

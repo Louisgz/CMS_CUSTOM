@@ -65,18 +65,17 @@ class PostManager extends BaseManager
      * @param Post $post
      * @return Post|bool
      */
-    public function updatePost($title, $content, $authorId, $id)
+    public function updatePost($id, $title, $content, $authorId = null)
     {
-        // TODO - getPostById($post->getId())
-        $updatePost = 'UPDATE `posts` SET `title` = :title, `content` = :content, `authorId` = :authorId WHERE `id` = :id';
+        $updatePost = 'UPDATE `posts` SET `title` = :title, `content` = :content, ' . ($authorId !== null  ? '`authorId` = :authorId ' : '') . 'WHERE `id` = :id';
         $request = $this->bdd->prepare($updatePost);
-        $request->execute(array(
+        $args = array(
             'id' => $id,
             'title' => $title,
             'content' => $content,
-            'authorId' => $authorId,
-        ));
-        return true;
+        );
+        $authorId !== null && $args['authorId'] = $authorId;
+        return $request->execute($args);
     }
 
     /**
@@ -95,31 +94,6 @@ class PostManager extends BaseManager
         $commentManager->deleteCommentByPostId($id);
 
         return true;
-    }
-
-    public function getAllComments($number = null, bool $returnArray)
-    {
-        $request = $this->bdd->prepare('SELECT * FROM `comments`' . ($number ? 'LIMIT :limite' : ''));
-        $request->bindParam(':limite', $number, PDO::PARAM_INT);
-        $request->execute();
-        if ($returnArray) {
-            $request->setFetchMode(PDO::FETCH_ASSOC);
-        } else {
-            $request->setFetchMode(PDO::FETCH_CLASS, 'Comment');
-        }
-        $posts = $request->fetchAll();
-
-        return $posts;
-    }
-
-    public function getAllCommentFromPostId(string $id)
-    {
-        $getComment = 'SELECT * FROM comments WHERE postId = :id';
-        $request = $this->bdd->prepare($getComment);
-        $request->bindValue(':id', $id, PDO::PARAM_STR);
-        $request->execute();
-        $comments = $request->fetchAll(PDO::FETCH_ASSOC);
-        return $comments;
     }
 
     public function createComment(string $postId, string $authorId, string $content)
@@ -181,7 +155,8 @@ class PostManager extends BaseManager
         return $posts;
     }
 
-    public function getAuthorById($id){
+    public function getAuthorById($id)
+    {
         $request = $this->bdd->prepare('SELECT * FROM `authors` where id = :id');
         $request->setFetchMode(PDO::FETCH_ASSOC);
         $request->execute(array(
