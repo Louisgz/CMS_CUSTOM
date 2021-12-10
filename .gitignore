@@ -1,4 +1,5 @@
-/database/
+# /database/
+/database/ib_logfile0
 /.idea/
 composer.lock
 .DS_Store
