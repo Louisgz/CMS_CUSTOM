@@ -5,24 +5,23 @@
     <!--Routes front-->
     <route path="/" action="index" controller="PostController"/>
     <route path="post" action="showPost" controller="PostController" params="id"/>
-    <route path="edit-post" action="editPost" controller="PostController" params="id"/>
+    <route path="create-comment" action="createComment" controller="PostController"/>
     <route path="edit-comment" action="editComment" controller="PostController" params="id"/>
     <route path="create-post" action="createPost" controller="PostController"/>
-    <route path="login" action="login" controller="AuthorController" params="username"/>
-    <route path="signup" action="signup" controller="AuthorController"/>
+    <route path="edit-post" action="editPost" controller="PostController" params="id"/>
     <route path="account" action="account" controller="AuthorController"/>
     <route path="list-users" action="listUsers" controller="AuthorController"/>
 
     <!--Routes actions front-->
-    <route path="create-comment" action="createComment" controller="PostController"/>
     <route path="delete-comment" action="deleteComment" controller="PostController" params='id,postId'/>
-    <route path="create-post" action="createPost" controller="PostController"/>
     <route path="delete-post" action="deletePost" controller="PostController" params='id'/>
     <route path="delete-author" action="deleteAuthor" controller="PostController" params='id'/>
     <route path='update' action="updateAuthorInfos" controller="AuthorController"/>
-    <route path='logout' action="logout" controller="AuthorController"/>
     
     <!--Auth-->
+    <route path="login" action="login" controller="AuthorController" params="username"/>
+    <route path="signup" action="signup" controller="AuthorController"/>
+    <route path='logout' action="logout" controller="AuthorController"/>
 
     <!--Routes API-->
     <route path="api/posts" action="posts" controller="ApiController" params='number,postId,commentId,authorId'/>

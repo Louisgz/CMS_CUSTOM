@@ -27,8 +27,6 @@ class AuthorController extends BaseController
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    //TODO Effectuer toutes les verifs pour les credentials
-
     $res = $authorManager->login($username, $password);
 
     if ($res['type'] === 'error') {

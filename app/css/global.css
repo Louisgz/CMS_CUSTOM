@@ -17,7 +17,7 @@
   align-items: left;
   border-radius: 10px;
   max-width: 500px;
-  max-width: 500px;
+  min-width: 500px;
 }
 
 .post-container .post-image {
