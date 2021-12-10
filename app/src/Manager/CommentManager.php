@@ -39,10 +39,9 @@ class CommentManager extends BaseManager
         $request->bindParam(':author_id', $authorId);
         $request->execute(array(
             'id' => $setNewId,
-            'date' => time(),
             'content' => $content,
             'authorId' => $authorId,
-            'postId' => $postId()
+            'postId' => $postId
         ));
     }
 

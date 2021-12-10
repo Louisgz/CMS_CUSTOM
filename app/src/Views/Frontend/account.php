@@ -36,7 +36,7 @@
         </div>
         <div class="input-group-text" style='background: white; border-radius: 0.25rem'>
           <input type="checkbox" aria-label="Checkbox for following text input" value='1'
-            <?= $isAdmin ? 'checked' : '' ?> name='isAdmin'>
+            <?= $isAdmin == 1 ? 'checked' : '' ?> name='isAdmin'>
         </div>
       </div>
       <div class="input-group mb-3">

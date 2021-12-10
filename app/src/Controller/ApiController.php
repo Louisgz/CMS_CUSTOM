@@ -39,7 +39,24 @@ class ApiController extends BaseController
 
   public function postPosts()
   {
-    //TODO Fonction pour ajouter un post par API
+    $postManager = new PostManager(PDOFactory::getMysqlConnection());
+
+    // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
+    // if (!$checkUser) {
+    //   $this->HTTPResponse->setCacheHeader(300);
+    //   return new ErrorController('User not connected', 'GET ');
+    // }
+
+    $authorId = !empty($this->params['authorId']) ? $this->params['authorId'] : false;
+    $json = file_get_contents('php://input');
+    $body = json_decode($json);
+    $title = $body->{'title'};
+    $content = $body->{'content'};
+    var_dump($title);
+    var_dump($content);
+
+    return $this->renderJSON($postManager->createPost($title, $content, $authorId));
   }
 
   public function putPosts()
@@ -107,9 +124,7 @@ class ApiController extends BaseController
 
   public function postComments()
   {
-    $postManager = new PostManager(PDOFactory::getMysqlConnection());
     $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
-    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
 
     // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
 
@@ -122,8 +137,9 @@ class ApiController extends BaseController
     $postId = !empty($this->params['postId']) ? $this->params['postId'] : false;
     $content = file_get_contents('php://input');
 
-    isset($this->params['number']) ? $number = abs(intval($this->params['number'])) : $number = null;
-    $this->renderJSON($commentManager->createComment($content, $authorId, $postId));
+    var_dump($content, $authorId, $postId);
+
+    return $this->renderJSON($commentManager->createComment($content, $authorId, $postId));
   }
 
   public function putComment()

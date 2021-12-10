@@ -87,7 +87,7 @@ class AuthorController extends BaseController
 
   public function getListUsers()
   {
-    if (isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] === 1) {
+    if (isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] == 1) {
       $user = new Author($_SESSION['user']);
       $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
 
