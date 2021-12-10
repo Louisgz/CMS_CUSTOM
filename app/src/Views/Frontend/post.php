@@ -36,14 +36,16 @@ use App\Entity\Author;
         <p><?php echo $post['content'] ?></p>
       </div>
     </div>
-    <div>
+    <div style='width: 80%'>
       <?php if (isset($_SESSION['user'])) { ?>
       <div>
         <h4>Ajouter un commentaire :</h4>
       </div>
       <form action="create-comment/?id=<?= $_GET['id'] ?>" method='post'>
-        <input type="text" id="commentInput" name="comment" placeholder="ajouter commentaire">
-        <input class="btn btn-success" type="submit" value="add comment">
+        <textarea type="text" id="commentInput" name="comment" placeholder="ajouter commentaire" class="formInput"
+          style="width: 100%"></textarea>
+
+        <input class="btn btn-success" type="submit" value="Post comment">
 
       </form>
 

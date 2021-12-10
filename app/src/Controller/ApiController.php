@@ -56,7 +56,7 @@ class ApiController extends BaseController
     var_dump($title);
     var_dump($content);
 
-    return $this->renderJSON($postManager->createPost($title, $content, $authorId));
+    return $this->renderJSON($postManager->createPost($title, $content, $authorId, null));
   }
 
   public function putPosts()
@@ -136,20 +136,44 @@ class ApiController extends BaseController
     $authorId = !empty($this->params['authorId']) ? $this->params['authorId'] : false;
     $postId = !empty($this->params['postId']) ? $this->params['postId'] : false;
     $content = file_get_contents('php://input');
-
-    var_dump($content, $authorId, $postId);
-
     return $this->renderJSON($commentManager->createComment($content, $authorId, $postId));
   }
 
-  public function putComment()
+  public function putComments()
   {
-    //TODO Fonction pour updater un commentaire par API
+    $commentId = !empty($this->params['commentId']) ? $this->params['commentId'] : false;
+    $authorId = !empty($this->params['authorId']) ? $this->params['authorId'] : false;
+    $postId = !empty($this->params['postId']) ? $this->params['postId'] : false;
+    $content = file_get_contents('php://input');
+
+    if ($authorId && $postId && $content) {
+
+      $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
+      $newPost = $commentManager->editComment($commentId, $content, $authorId, $postId);
+
+      $this->HTTPResponse->setCacheHeader(300);
+      return $this->renderJSON($newPost);
+    }
   }
 
-  public function deleteComment()
+  public function deleteComments()
   {
-    //TODO Fonction pour delete un commentaire par API
+    $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
+    // $checkUser = $authorManager->checkCredential($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+
+    // if (!$checkUser) {
+    //   $this->HTTPResponse->setCacheHeader(300);
+    //   return new ErrorController('User not connected', 'GET ');
+    // }
+
+    $commentId = !empty($this->params['commentId']) ? $this->params['commentId'] : false;
+
+    if ($commentId) {
+      $post = $commentManager->deleteComment($commentId);
+      if (!$post) return new ErrorController('No post', 'GET');
+      $this->HTTPResponse->setCacheHeader(300);
+      return $this->renderJSON($commentId);
+    }
   }
 
   public function renderJSON($content)

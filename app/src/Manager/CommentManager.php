@@ -65,13 +65,14 @@ class CommentManager extends BaseManager
 
     public function editComment(string $id, string $content, string $authorId,  string $postId)
     {
-        $editComment = 'UPDATE comments SET content = :content, author = :author, postId = :postId WHERE id = :id';
+        $editComment = 'UPDATE comments SET content = :content, authorId = :authorId, postId = :postId WHERE id = :id';
         $request = $this->bdd->prepare($editComment);
-        $request->bindParam(':id', $id);
-        $request->bindParam(':content', $content);
-        $request->bindParam(':author', $authorId);
-        $request->bindParam(':postId', $postId);
-        $request->execute();
-        return true;
+        $comment = $request->execute(array(
+            'content' => $content,
+            'authorId' => $authorId,
+            'postId' => $postId,
+            'id' => $id,
+        ));
+        return $comment;
     }
 }

@@ -19,12 +19,10 @@
     <route path="create-post" action="createPost" controller="PostController"/>
     <route path="delete-post" action="deletePost" controller="PostController" params='id'/>
     <route path="delete-author" action="deleteAuthor" controller="PostController" params='id'/>
-    
-    <!--Auth-->
-    <route path='signup' action="signup" controller="AuthorController" params="firstname,lastname,username"/>
-    <route path='login' action="login" controller="AuthController" />
     <route path='update' action="updateAuthorInfos" controller="AuthorController"/>
     <route path='logout' action="logout" controller="AuthorController"/>
+    
+    <!--Auth-->
 
     <!--Routes API-->
     <route path="api/posts" action="posts" controller="ApiController" params='number,postId,commentId,authorId'/>

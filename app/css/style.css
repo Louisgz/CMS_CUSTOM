@@ -30,7 +30,7 @@ a {
   padding: 20px;
 }
 
-#formContent {
+.formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
   background: #fff;
@@ -58,9 +58,9 @@ a {
 
 /* FORM TYPOGRAPHY*/
 
-#formContent input[type="button"],
-#formContent input[type="submit"],
-#formContent input[type="reset"] {
+.formContent input[type="button"],
+.formContent input[type="submit"],
+.formContent input[type="reset"] {
   background-color: #56baed;
   border: none;
   color: white;
@@ -78,15 +78,15 @@ a {
   transition: transform 0.3s ease-in-out, background 0.3s ease-in-out;
 }
 
-#formContent input[type="button"]:hover,
-#formContent input[type="submit"]:hover,
-#formContent input[type="reset"]:hover {
+.formContent input[type="button"]:hover,
+.formContent input[type="submit"]:hover,
+.formContent input[type="reset"]:hover {
   background-color: #39ace7;
 }
 
-#formContent input[type="button"]:active,
-#formContent input[type="submit"]:active,
-#formContent input[type="reset"]:active {
+.formContent input[type="button"]:active,
+.formContent input[type="submit"]:active,
+.formContent input[type="reset"]:active {
   -moz-transform: scale(0.95);
   -webkit-transform: scale(0.95);
   -o-transform: scale(0.95);
@@ -94,9 +94,10 @@ a {
   transform: scale(0.95);
 }
 
-#formContent input[type="text"],
-#formContent textarea,
-#formContent input[type="password"] {
+.formContent input[type="text"],
+.formContent textarea,
+.formContent input[type="password"],
+.formInput {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -105,23 +106,23 @@ a {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 5px;
+  margin: 5px 0;
   width: 85%;
   border: 2px solid #f6f6f6;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
 }
 
-#formContent input[type="text"]:focus,
-#formContent textarea:focus,
-#formContent input[type="password"]:focus {
+.formContent input[type="text"]:focus,
+.formContent textarea:focus,
+.formContent input[type="password"]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
-#formContent input[type="text"]:placeholder,
-#formContent textarea:placeholder,
-#formContent input[type="password"]:placeholder {
+.formContent input[type="text"]:placeholder,
+.formContent textarea:placeholder,
+.formContent input[type="password"]:placeholder {
   color: #cccccc;
 }
 

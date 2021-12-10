@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <div id="formContent">
+  <div class="formContent">
 
     <h3 class="formTitle">Page d'inscription</h3>
     <!-- Login Form -->

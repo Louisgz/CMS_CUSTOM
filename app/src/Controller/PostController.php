@@ -5,6 +5,7 @@ namespace App\Controller;
 // use App\Entity\Author;
 
 use App\Entity\Author;
+use App\Entity\Post;
 use App\Fram\Factories\PDOFactory;
 use App\Manager\AuthorManager;
 use App\Fram\Utils\Flash;
@@ -20,8 +21,19 @@ class PostController extends BaseController
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
         $commentManager = new CommentManager(PDOFactory::getMysqlConnection());
+        $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
         $posts = $postManager->getAllPosts();
         $comments = $commentManager->getAllComments();
+
+        // $postsWithAuhtor = array();
+        // foreach ($posts as  $post) {
+        //     $post = new Post($post);
+        //     $author = $authorManager->getSingleAuthor($post->getAuthorId());
+        //     $postsWithAuhtor[] = array(
+        //         'author' => $author,
+        //         $post => $post,
+        //     );
+        // };
 
 
         $this->render(
@@ -151,7 +163,7 @@ class PostController extends BaseController
     public function postEditComment()
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
-        $postManager->postUpdateComment( $_GET['postId'], $_SESSION['user']['id'], $_POST['content'], $_GET['id']);
+        $postManager->postUpdateComment($_GET['postId'], $_SESSION['user']['id'], $_POST['content'], $_GET['id']);
         header('Location: /post?id=' . $_GET['postId']);
         exit();
     }
