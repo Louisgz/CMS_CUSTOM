@@ -83,6 +83,27 @@ class PostController extends BaseController
         );
     }
 
+    public function getEditPost()
+    {
+        $postManager = new PostManager(PDOFactory::getMysqlConnection());
+
+        $this->render(
+            'editPost.php',
+            [
+                'posts' => $postManager->getPostById($_GET['id']),
+            ],
+            'edit a post'
+        );
+    }
+
+    public function postEditPost()
+    {
+        $postManager = new PostManager(PDOFactory::getMysqlConnection());
+        $postManager->updatePost($_POST['title'], $_POST['content'], $_SESSION['user']['id'], $_GET['id']);
+        header('Location: /post?id=' . $_GET['id']);
+        exit();
+    }
+
     public function postDeletePost()
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
@@ -94,7 +115,6 @@ class PostController extends BaseController
         header('Location: /');
         exit();
     }
-
     public function postCreateComment()
     {
         $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());

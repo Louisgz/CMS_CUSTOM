@@ -52,3 +52,8 @@ td {
   display: table-cell;
   vertical-align: middle;
 }
+
+.button-flex{
+  display: flex;
+  flex-direction: row;
+}

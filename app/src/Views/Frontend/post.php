@@ -14,7 +14,7 @@ use App\Entity\Author;
   <div class="single-post-page">
     <div class="single-post-background">
       <h2><?php echo $post['title'] ?></h2>
-      <div>
+      <div class="button-flex">
         <?php
                     $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
                     if ($user && ($user['isAdmin'] === 1 || $user['id'] === $post['authorId'])) {
@@ -22,7 +22,12 @@ use App\Entity\Author;
         <form action="delete-post?id=<?= $_GET['id'] ?>" method="post">
           <button type="submit" class="btn btn-danger">Delete post</button>
         </form>
-        <button type="button" class="btn btn-warning">Edit post</button>
+        </form>
+        <div>
+        <a href="/edit-post?id=<?= $_GET['id'] ?>">
+            <button type="button" class="btn btn-warning">Edit post</button>
+            </a>
+        </div>
         <?php
 
                     }
