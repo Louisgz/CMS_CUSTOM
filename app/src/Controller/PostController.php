@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Entity\Author;
 use App\Fram\Factories\PDOFactory;
 use App\Manager\AuthorManager;
-// use App\Fram\Utils\Flash;
+use App\Fram\Utils\Flash;
 use App\Manager\PostManager;
 use App\Manager\CommentManager;
 
@@ -68,16 +68,25 @@ class PostController extends BaseController
     public function postCreatePost()
     {
         $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+        $postManager = new PostManager(PDOFactory::getMysqlConnection());
+        $res = $postManager->uploadFile($_FILES['postFile']);
+
+        if ($res['type'] === 'error') {
+            Flash::setFlash('alert', $res['message']);
+            header('Location: create-post');
+            exit();
+        }
+        $url = $res['path'];
         $title = $_POST['title'];
         $content = $_POST['content'];
         if (isset($_SESSION['user'])) $user = new Author($_SESSION['user']);
 
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
-        $postManager->createPost($title, $content, $user->getId());
+        $postManager->createPost($title, $content, $user->getId(), $url);
 
         header('Location: /');
         exit();
-        // return $user;
+        return $user;
     }
 
     public function getShowPost()

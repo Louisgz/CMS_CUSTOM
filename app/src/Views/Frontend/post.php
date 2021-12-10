@@ -12,27 +12,26 @@ use App\Entity\Author;
   foreach ($posts as $post) {
   ?>
   <div class="single-post-page">
-    <div class="single-post-background">
+    <div class="single-post-container">
       <h2><?php echo $post['title'] ?></h2>
-      <div class="button-flex">
-        <?php
-          $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-          if ($user && ($user['isAdmin'] == 1 || $user['id'] === $post['authorId'])) {
-          ?>
-        <form action="delete-post?id=<?= $_GET['id'] ?>" method="post">
+      <?php
+        $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        if ($user && ($user['isAdmin'] == 1 || $user['id'] === $post['authorId'])) {
+        ?>
+      <div class="button-flex" style="margin: 1rem 0 3rem">
+        <form action="delete-post?id=<?= $_GET['id'] ?>" method="post" style='margin-right: 1.5rem'>
           <button type="submit" class="btn btn-danger">Delete post</button>
         </form>
         </form>
         <div>
-        <a href="/edit-post?id=<?= $_GET['id'] ?>">
+          <a href="/edit-post?id=<?= $_GET['id'] ?>">
             <button type="button" class="btn btn-warning">Edit post</button>
-            </a>
+          </a>
         </div>
-        <?php
-
-          }
-          ?>
       </div>
+      <?php
+        }
+        ?>
       <div>
         <p><?php echo $post['content'] ?></p>
       </div>
@@ -50,7 +49,7 @@ use App\Entity\Author;
 
       <?php } ?>
     </div>
-    <div class="single-post-background">
+    <div class="single-post-container">
       <h4>
         All Comments:
       </h4>
@@ -65,21 +64,22 @@ use App\Entity\Author;
           </p>
         </div>
         <div class="button-flex">
-        <?php
-            $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
-            if ($user && ($user['isAdmin'] === 1 || $user['id'] === $comment['authorId'])) {
-            ?>
-        <form action="delete-comment?id=<?= $comment['id'] ?>&postId=<?= $post['id'] ?>" method='post'>
-          <button type="submit" class="btn btn-danger">Delete comment</button>
-        </form>
-        <a href="/edit-comment?id=<?= $comment['id'] ?>&postId=<?= $post['id'] ?>">
-          <button type="submit" class="btn btn-warning">edit comment</button>
-        </a>
-        <?php
+          <?php
+                $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+                if ($user && ($user['isAdmin'] === 1 || $user['id'] === $comment['authorId'])) {
+                ?>
+          <form action="delete-comment?id=<?= $comment['id'] ?>&postId=<?= $post['id'] ?>" method='post'
+            style="margin-right: 1rem">
+            <button type="submit" class="btn btn-danger">Delete comment</button>
+          </form>
+          <a href="/edit-comment?id=<?= $comment['id'] ?>&postId=<?= $post['id'] ?>">
+            <button type="submit" class="btn btn-warning">edit comment</button>
+          </a>
+          <?php
 
-        }
-        ?>
-            </div>
+                }
+                ?>
+        </div>
       </div>
       <?php
           }

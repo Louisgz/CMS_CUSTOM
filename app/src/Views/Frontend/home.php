@@ -20,6 +20,9 @@
         </button>
       </a>
     </div>
+    <div class="post-image">
+      <img src="<?= $post['image'] ?>" alt="">
+    </div>
   </div>
   <?php
   }
