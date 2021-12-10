@@ -35,46 +35,43 @@ class AuthorManager extends BaseManager
     public function login(string $username, string $password)
     {
         $userInfos = $this->getUser($username);
-        if ($userInfos) {
-            $user = new Author($userInfos);
-            if (password_verify($password, $user->getPassword())) {
-                $_SESSION['user'] = $userInfos;
-                return [
-                    'type' => 'success',
-                ];
-            } else {
-                return [
-                    'type' => 'error',
-                    'message' => 'Mot de passe incorrect',
-                    'username' =>  $username,
-                ];
-            }
-        } else {
-            return [
-                'type' => 'error',
-                'message' => 'Login incorrect',
-                'username' =>  $username,
-            ];
-        }
+        if (!$userInfos) return [
+            'type' => 'error',
+            'message' => 'Login incorrect',
+            'username' =>  $username,
+        ];
+
+        $user = new Author($userInfos);
+
+        if (password_verify($password, $user->getPassword())) return [
+            'type' => 'error',
+            'message' => 'Mot de passe incorrect',
+            'username' =>  $username,
+        ];
+
+        $_SESSION['user'] = $userInfos;
+        return [
+            'type' => 'success',
+        ];
     }
 
-    public function updateAuthor($firstname, $lastname, $username, $password, $idAdmin, $id)
+    public function updateAuthor($firstname, $lastname, $username, $password, $isAdmin, $id)
     {
         $insert = "UPDATE `authors` SET `firstname` = :firstname, `lastname` = :lastname, `isAdmin` = :isAdmin" . ($password ? ", `password` = :pw" : '') . " WHERE id = :id";
         $request = $this->bdd->prepare($insert);
         $args = array(
             'firstname' => $firstname,
             'lastname' => $lastname,
-            'isAdmin' => $idAdmin,
+            'isAdmin' => $isAdmin,
             'id' => $id,
-            'pw' => $password
         );
+        $password && $args['pw'] = $password;
         $request->execute($args);
         return array(
             'firstname' => $firstname,
             'lastname' => $lastname,
-            'password' => $password || $_GET['user']['password'],
-            'isAdmin' => $idAdmin,
+            'password' => $password || $_SESSION['user']['password'],
+            'isAdmin' => $isAdmin,
             'id' => $id,
             'username' => $username,
         );
@@ -98,8 +95,10 @@ class AuthorManager extends BaseManager
     {
         $select = "SELECT * FROM authors";
         $request = $this->bdd->prepare($select);
-        $request->fetchAll(PDO::FETCH_CLASS, 'Author');
-        return $request->fetchAll();
+        $request->execute();
+        $request->setFetchMode(PDO::FETCH_CLASS, 'Author');
+        $users = $request->fetchAll();
+        return $users;
     }
 
     /**
@@ -177,5 +176,11 @@ class AuthorManager extends BaseManager
         return [
             'type' => 'success',
         ];
+    }
+
+
+    public function checkAuthorExists($username)
+    {
+        return $this->getUser($username) ? true : false;
     }
 }

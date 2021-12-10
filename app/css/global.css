@@ -45,3 +45,10 @@
 .read-more-button {
   color: #fff;
 }
+
+th,
+td {
+  padding: 1rem !important;
+  display: table-cell;
+  vertical-align: middle;
+}

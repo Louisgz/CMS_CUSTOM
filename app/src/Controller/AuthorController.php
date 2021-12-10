@@ -46,7 +46,12 @@ class AuthorController extends BaseController
     if (!isset($_SESSION['user'])) {
       $this->render(
         'signup.php',
-        [],
+        [
+          'firstname' => $_GET['firstname'],
+          'lastname' => $_GET['lastname'],
+          'username' => $_GET['username'],
+          'password' => $_GET['password'],
+        ],
         'signup page'
       );
     } else {
@@ -80,17 +85,76 @@ class AuthorController extends BaseController
     }
   }
 
+  public function getListUsers()
+  {
+    if (isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] === 1) {
+      $user = new Author($_SESSION['user']);
+      $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+
+      $this->render(
+        'list-users.php',
+        [
+          'users' => $authorManager->getAllAuthors(),
+          'userId' => $user->getId(),
+        ],
+        'List users'
+      );
+    } else {
+      header('Location: /');
+      exit();
+    }
+  }
+
   public function postSignup()
   {
     $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
-    $username = $_POST['username'];
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $values = array(
+      'firstname' => $_POST['firstname'],
+      'lastname' => $_POST['lastname'],
+      'username' => $_POST['username'],
+      'password' => $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null,
+    );
+    $isValid = true;
+    $message = '';
 
-    //TODO Effectuer toutes les verifs pour les credentials
+    if (!$values['firstname']) {
+      $isValid = false;
+      $message = "Merci de renseigner un firstname";
+    }
 
-    $user = $authorManager->createNewAuthor($firstname, $lastname, $username, $password);
+    if (!$values['lastname']) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un lastname";
+    }
+
+    if (!$values['username']) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un username";
+    }
+
+    if (!$values['password']) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un password";
+    }
+
+    if ($authorManager->checkAuthorExists($values['username'])) {
+      $isValid = false;
+      !$message && $message = "L'utilisateur existe déjà ! ";
+    }
+
+    if (!$isValid) {
+      Flash::setFlash('alert', $message);
+      $args = '?';
+      $index = 1;
+      foreach ($values as $key => $value) {
+        $key !== 'password' && $args .= $key . '=' . $value . ($index !== count($values) - 1 ? '&' : '');
+        $index++;
+      };
+      header("Location: /signup" . $args);
+      exit();
+    }
+
+    $user = $authorManager->createNewAuthor($values['firstname'], $values['lastname'], $values['username'], $values['password']);
     $_SESSION['user'] = $user;
 
     header("Location: /account");
@@ -101,6 +165,52 @@ class AuthorController extends BaseController
   {
     $_SESSION['user'] = null;
     header('Location: /');
+    exit();
+  }
+
+  public function postUpdateAuthorInfos()
+  {
+    $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+    $user = new Author($_SESSION['user']);
+    $id = $user->getId();
+    $username = $user->getUsername();
+    $isAdmin = $_POST['isAdmin'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    if (isset($_POST['isAdmin']) && $_POST['isAdmin'] == '1') {
+      $isAdmin = 1;
+    } else {
+      $isAdmin = 0;
+    }
+    $password = $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
+
+    $isValid = true;
+    $message = '';
+
+    if (!$firstname) {
+      $isValid = false;
+      $message = "Merci de renseigner un firstname";
+    }
+
+    if (!$lastname) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un lastname";
+    }
+
+    if (!$username) {
+      $isValid = false;
+      !$message && $message = "Merci de renseigner un username";
+    }
+
+    if (!$isValid) {
+      Flash::setFlash('alert', $message);
+    } else {
+      $user = $authorManager->updateAuthor($firstname, $lastname, $username, $password, $isAdmin, $id);
+      Flash::setFlash('success', 'Vos informations ont bien étés mises à jour !');
+      $_SESSION['user'] = $user;
+    }
+
+    header("Location: /account");
     exit();
   }
 }

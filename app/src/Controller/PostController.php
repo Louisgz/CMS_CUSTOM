@@ -140,4 +140,18 @@ class PostController extends BaseController
         header('Location: /post?id=' . $postId);
         exit();
     }
+
+    public function postDeleteAuthor()
+    {
+        if ($this->params['id'] !== $_SESSION['user']['id']) {
+            $authorManager = new AuthorManager(PDOFactory::getMysqlConnection());
+            $id = !empty($this->params['id']) ? $this->params['id'] : false;
+
+            if ($id) {
+                $authorManager->deleteAuthor($id);
+            }
+        }
+        header('Location: /list-users');
+        exit();
+    }
 }

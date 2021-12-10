@@ -13,6 +13,7 @@ session_start();
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/global.css">
     <title><?= $title; ?></title>
+    <link rel="shortcut icon" href="./public/images/logo.png" type="image/x-icon">
   </head>
 
   <body>
@@ -32,6 +33,11 @@ session_start();
           ?>
             <li><a href="/create-post" class="nav-link px-2 text-white">Create post</a></li>
             <li><a href="/account" class="nav-link px-2 text-white">My account</a></li>
+            <?php
+          }
+          if (isset($_SESSION['user']) && $_SESSION['user']['isAdmin'] === 1) {
+          ?>
+            <li><a href="/list-users" class="nav-link px-2 text-white">List users</a></li>
             <?php
           }
           ?>

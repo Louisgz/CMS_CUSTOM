@@ -10,17 +10,19 @@
     <route path="login" action="login" controller="AuthorController" params="username"/>
     <route path="signup" action="signup" controller="AuthorController"/>
     <route path="account" action="account" controller="AuthorController"/>
+    <route path="list-users" action="listUsers" controller="AuthorController"/>
 
     <!--Routes actions front-->
     <route path="create-comment" action="createComment" controller="PostController"/>
     <route path="delete-comment" action="deleteComment" controller="PostController" params='id,postId'/>
     <route path="create-post" action="createPost" controller="PostController"/>
     <route path="delete-post" action="deletePost" controller="PostController" params='id'/>
+    <route path="delete-author" action="deleteAuthor" controller="PostController" params='id'/>
     
     <!--Auth-->
-    <route path='signup' action="signup" controller="AuthorController"/>
+    <route path='signup' action="signup" controller="AuthorController" params="firstname,lastname,username"/>
     <route path='login' action="login" controller="AuthController" />
-    <route path='update' action="update" controller="AuthController"/>
+    <route path='update' action="updateAuthorInfos" controller="AuthorController"/>
     <route path='logout' action="logout" controller="AuthorController"/>
 
     <!--Routes API-->
