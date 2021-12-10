@@ -31,7 +31,7 @@ class AuthorController extends BaseController
 
     $res = $authorManager->login($username, $password);
 
-    if ($res['type'] == 'error') {
+    if ($res['type'] === 'error') {
       Flash::setFlash('alert', $res['message']);
       header("Location: /login?username=" . $res['username']);
       exit();
@@ -112,9 +112,9 @@ class AuthorController extends BaseController
       'firstname' => $_POST['firstname'],
       'lastname' => $_POST['lastname'],
       'username' => $_POST['username'],
-      'password' => $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null,
+      'password' => $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : false,
     );
-    $isValid = true;
+    $isValid = false;
     $message = '';
 
     if (!$values['firstname']) {
@@ -153,7 +153,6 @@ class AuthorController extends BaseController
       header("Location: /signup" . $args);
       exit();
     }
-
     $user = $authorManager->createNewAuthor($values['firstname'], $values['lastname'], $values['username'], $values['password']);
     $_SESSION['user'] = $user;
 
