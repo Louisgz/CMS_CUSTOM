@@ -114,7 +114,7 @@ class AuthorController extends BaseController
       'username' => $_POST['username'],
       'password' => $_POST['password'] !== '' ? password_hash($_POST['password'], PASSWORD_DEFAULT) : false,
     );
-    $isValid = false;
+    $isValid = true;
     $message = '';
 
     if (!$values['firstname']) {
