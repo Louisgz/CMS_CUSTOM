@@ -5,13 +5,16 @@
   ?>
   <div class="post-background">
     <div>
+
       <a href="/post?id=<?php echo $post['id'] ?>">
-        <h3><?php echo $post['title'] ?></h3>
+        <h3><?php echo $post['post']['title'] ?></h3>
       </a>
-      <p><?php echo $post['content'] ?></p>
+      <p style="font-size: 12px;" > écrit par : <?= $post['author']['username'] ?></p>
+      <p style="font-size: 12px;" ><?= $post['post']['date'] ?></p>
+      <p><?php echo $post['post']['content'] ?></p>
     </div>
     <div>
-      <a class="read-more-button" href="/post?id=<?php echo $post['id'] ?>">
+      <a class="read-more-button" href="/post?id=<?php echo $post['post']['id'] ?>">
         <button type="button" class="btn btn-primary">
           Lire la suite
         </button>

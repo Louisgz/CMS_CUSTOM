@@ -179,4 +179,14 @@ class PostManager extends BaseManager
 
         return $posts;
     }
+
+    public function getAuthorById($id){
+        $request = $this->bdd->prepare('SELECT * FROM `authors` where id = :id');
+        $request->setFetchMode(PDO::FETCH_ASSOC);
+        $request->execute(array(
+            'id' => $id
+        ));
+        $users = $request->fetch();
+        return $users;
+    }
 }
