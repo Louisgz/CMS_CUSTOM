@@ -46,16 +46,17 @@ class PostManager extends BaseManager
      * @param Post $post
      * @return Post|bool
      */
-    public function createPost($title, $content, $authorId)
+    public function createPost($title, $content, $authorId, $url)
     {
         $newId = uniqid();
-        $insert = 'INSERT INTO `posts` (`id`, `title`, `content`, `authorId`) VALUES (:id, :title, :content, :authorId)';
+        $insert = 'INSERT INTO `posts` (`id`, `title`, `content`, `authorId`, `image`) VALUES (:id, :title, :content, :authorId, :imagePath)';
         $request = $this->bdd->prepare($insert);
         $request->execute(array(
             'id' => $newId,
             'title' => $title,
             'content' => $content,
             'authorId' => $authorId,
+            'imagePath' => $url,
         ));
         return true;
     }
@@ -64,7 +65,7 @@ class PostManager extends BaseManager
      * @param Post $post
      * @return Post|bool
      */
-    public function updatePost( $title, $content, $authorId, $id)
+    public function updatePost($title, $content, $authorId, $id)
     {
         // TODO - getPostById($post->getId())
         $updatePost = 'UPDATE `posts` SET `title` = :title, `content` = :content, `authorId` = :authorId WHERE `id` = :id';
@@ -178,5 +179,53 @@ class PostManager extends BaseManager
         $posts = $request->fetchAll();
 
         return $posts;
+    }
+
+    public function uploadFile($file)
+    {
+        $res = array(
+            'message' => '',
+            'type' => '',
+            'target' => '',
+        );
+
+        if (!empty($file) && isset($file)) {
+            switch ($file["error"]) {
+                case UPLOAD_ERR_OK:
+                    $target = "public/uploads/";
+                    $imageName = str_replace(' ', '-', strtolower($file['name']));
+
+                    $target = $target . $imageName;
+
+                    $path = $file['name'];
+                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+
+                    if ($ext === 'png' || $ext === 'jpg' || $ext === 'jpeg' || $ext === 'svg') {
+                        if (move_uploaded_file($file['tmp_name'], $target)) {
+                            $res['type'] = 'success';
+                            $res['message'] = "The file " . $imageName . " has been uploaded";
+                            $res['path'] = $target;
+
+                            $imageFileType = pathinfo($target, PATHINFO_EXTENSION);
+                            $check = getimagesize($target);
+                        } else {
+                            $res['type'] = 'error';
+                            $res['message'] = 'Sorry, there was a problem uploading your file.';
+                        }
+                    } else {
+                        $res['type'] = 'error';
+                        $res['message'] = 'Your file extension should be of type .png, .jpg, .jpeg or .svgx';
+                    }
+
+                    break;
+                default:
+                    $res['type'] = 'error';
+                    $res['message'] = 'Sorry, there was a problem uploading your file.';
+            }
+        } else {
+            $res['type'] = 'error';
+            $res['message'] = 'File missing.';
+        }
+        return $res;
     }
 }
