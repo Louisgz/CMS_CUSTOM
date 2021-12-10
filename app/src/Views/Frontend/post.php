@@ -14,7 +14,7 @@ use App\Entity\Author;
   <div class="single-post-page">
     <div class="single-post-background">
       <h2><?php echo $post['title'] ?></h2>
-      <div>
+      <div class="button-flex">
         <?php
                     $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
                     if ($user && ($user['isAdmin'] === 1 || $user['id'] === $post['authorId'])) {

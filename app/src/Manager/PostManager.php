@@ -67,7 +67,7 @@ class PostManager extends BaseManager
     public function updatePost( $title, $content, $authorId, $id)
     {
         // TODO - getPostById($post->getId())
-        $updatePost = 'UPDATE posts SET title = :title, content = :content, authorId = :authorId WHERE id = :id';
+        $updatePost = 'UPDATE `posts` SET `title` = :title, `content` = :content, `authorId` = :authorId WHERE `id` = :id';
         $request = $this->bdd->prepare($updatePost);
         $request->execute(array(
             'id' => $id,

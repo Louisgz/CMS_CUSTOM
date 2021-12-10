@@ -99,9 +99,8 @@ class PostController extends BaseController
     public function postEditPost()
     {
         $postManager = new PostManager(PDOFactory::getMysqlConnection());
-        $postManager->updatePost($_POST['title'], $_POST['content'], $_GET['authorId'], $_GET['id']);
-
-        header('Location: /');
+        $postManager->updatePost($_POST['title'], $_POST['content'], $_SESSION['user']['id'], $_GET['id']);
+        header('Location: /post?id=' . $_GET['id']);
         exit();
     }
 
